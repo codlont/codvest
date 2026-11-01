@@ -1,0 +1,808 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>About CodVest | A CODLONT Company</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #08090b;
+      --surface: #111317;
+      --surface2: #171a20;
+      --gold: #d8b66c;
+      --gold-light: #f1dba5;
+      --silver: #c6cbd3;
+      --muted: #9299a5;
+      --white: #f7f7f5;
+      --border: rgba(255,255,255,.09);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,9,11,.9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: "Manrope", sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+
+    .brand-symbol {
+      width: 43px;
+      height: 43px;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      color: var(--silver);
+      font-size: 13px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.current {
+      color: var(--gold-light);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 13px 20px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f0d99e, #bd934b);
+      color: #17130b;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(216,182,108,.2);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(216,182,108,.5);
+      color: var(--gold-light);
+    }
+
+    .menu-button {
+      display: none;
+      background: none;
+      border: 0;
+      color: white;
+      font-size: 27px;
+      cursor: pointer;
+    }
+
+    /* PAGE HERO */
+
+    .page-hero {
+      padding: 115px 0 105px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 85% 40%, rgba(216,182,108,.13), transparent 40%),
+        #0b0d10;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border: 1px solid rgba(216,182,108,.13);
+      border-radius: 50%;
+      right: -100px;
+      top: 20px;
+      box-shadow: 0 0 0 55px rgba(216,182,108,.025),
+                  0 0 0 110px rgba(216,182,108,.018);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 22px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Manrope", sans-serif;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(43px, 6vw, 69px);
+      letter-spacing: -3px;
+      line-height: 1.12;
+    }
+
+    .page-hero h1 span { color: var(--gold); }
+
+    .page-hero p {
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 15px;
+      line-height: 1.9;
+      margin-top: 24px;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 95px 0;
+    }
+
+    .section-label {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 17px;
+    }
+
+    .section-heading {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.2;
+      letter-spacing: -1.7px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading span { color: var(--gold); }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.95;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 65px;
+      align-items: center;
+    }
+
+    .intro-art {
+      min-height: 370px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background:
+        radial-gradient(circle at center, rgba(216,182,108,.15), transparent 55%),
+        linear-gradient(145deg, #171a20, #0b0d10);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-art::before,
+    .intro-art::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(216,182,108,.16);
+      transform: rotate(45deg);
+    }
+
+    .intro-art::after {
+      width: 190px;
+      height: 190px;
+      border-color: rgba(198,203,211,.18);
+    }
+
+    .intro-art svg {
+      width: 150px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 30px rgba(216,182,108,.25));
+    }
+
+    /* MISSION AND VISION */
+
+    .purpose-section {
+      background: #0d0f12;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .purpose-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .purpose-card {
+      padding: 38px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: linear-gradient(145deg, #171a20, #101216);
+    }
+
+    .purpose-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      background: rgba(216,182,108,.1);
+      border: 1px solid rgba(216,182,108,.2);
+      border-radius: 10px;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .purpose-card h3 {
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    .purpose-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    /* VALUES */
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 17px;
+      margin-top: 40px;
+    }
+
+    .value-card {
+      padding: 27px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: .25s;
+    }
+
+    .value-card:hover {
+      border-color: rgba(216,182,108,.4);
+      transform: translateY(-4px);
+    }
+
+    .value-card .number {
+      color: var(--gold);
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .value-card h3 {
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .value-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    /* COMPANY */
+
+    .company-section {
+      background: #0d0f12;
+      border-top: 1px solid var(--border);
+    }
+
+    .company-box {
+      padding: 45px;
+      border: 1px solid rgba(216,182,108,.22);
+      border-radius: 14px;
+      background: linear-gradient(120deg, rgba(216,182,108,.09), #111317 65%);
+    }
+
+    .company-box h2 {
+      font-size: 30px;
+      margin-bottom: 17px;
+    }
+
+    .company-box h2 span { color: var(--gold); }
+
+    .company-box p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 14px;
+      max-width: 800px;
+    }
+
+    .company-box a {
+      display: inline-block;
+      margin-top: 23px;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 60px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 35px;
+      padding-bottom: 45px;
+    }
+
+    .footer-about p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+      max-width: 280px;
+      margin-top: 17px;
+    }
+
+    .footer-column h3 {
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .footer-column a {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-column a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      color: #747b85;
+      font-size: 11px;
+    }
+
+    @media (max-width: 950px) {
+      .nav-links { gap: 14px; }
+      .intro-grid { gap: 35px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .navbar { height: 72px; }
+
+      .menu-button { display: block; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        padding: 24px 5%;
+        background: #101216;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+      }
+
+      .nav-links.active { display: flex; }
+
+      .nav-actions .btn-outline { display: none; }
+
+      .nav-actions .btn {
+        padding: 10px 13px;
+        font-size: 11px;
+      }
+
+      .brand { font-size: 22px; }
+      .brand-symbol { width: 37px; height: 37px; }
+
+      .page-hero { padding: 85px 0; }
+
+      .page-hero h1 { letter-spacing: -2px; }
+
+      section { padding: 70px 0; }
+
+      .intro-grid { grid-template-columns: 1fr; }
+
+      .intro-art { min-height: 280px; }
+
+      .purpose-grid { grid-template-columns: 1fr; }
+
+      .values-grid { grid-template-columns: 1fr 1fr; }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 35px 20px;
+      }
+
+      .footer-about { grid-column: 1 / -1; }
+
+      .company-box { padding: 30px 23px; }
+    }
+
+    @media (max-width: 430px) {
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container navbar">
+
+      <a href="index.html" class="brand">
+        <svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CodVest logo">
+          <defs>
+            <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+              <stop stop-color="#F4DFAD"/>
+              <stop offset="1" stop-color="#A47B35"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#goldGradient)" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3"/>
+          <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+        </svg>
+        Cod<span>Vest</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="current">About</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="investment-plans.html">Investment Plans</a>
+        <a href="security.html">Security</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-gold">Get Started</a>
+      </div>
+
+      <button class="menu-button" id="menuButton" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">A CODLONT company</div>
+          <h1>More than an investment platform. <span>A vision.</span></h1>
+          <p>
+            Get to know CodVest, our purpose and the principles behind
+            our approach to cryptocurrency investment management.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container intro-grid">
+
+        <div>
+          <div class="section-label">Who we are</div>
+          <h2 class="section-heading">
+            Introducing <span>CodVest.</span>
+          </h2>
+          <p class="section-text">
+            CodVest is a cryptocurrency investment platform being developed
+            by CODLONT. It is designed to give users a structured way to
+            explore digital asset investment options and access information
+            about their accounts.
+            <br><br>
+            Our approach places importance on clear information, responsible
+            decision-making and a platform experience that is easy to
+            understand.
+            <br><br>
+            We recognise that cryptocurrency markets involve significant
+            uncertainty. Our goal is to make the investment process and its
+            associated risks easier for users to review.
+          </p>
+        </div>
+
+        <div class="intro-art">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="artGold" x1="10" y1="10" x2="90" y2="90">
+                <stop stop-color="#F4DFAD"/>
+                <stop offset="1" stop-color="#A47B35"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#artGold)" stroke-width="4"/>
+            <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3"/>
+            <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#artGold)" stroke-width="3"/>
+            <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+          </svg>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="purpose-section">
+      <div class="container">
+
+        <div class="section-label">Our purpose</div>
+        <h2 class="section-heading">What drives <span>CodVest.</span></h2>
+
+        <div class="purpose-grid">
+
+          <div class="purpose-card">
+            <div class="purpose-icon">◎</div>
+            <h3>Our Mission</h3>
+            <p>
+              To develop an accessible and structured cryptocurrency
+              investment platform that helps users understand their
+              investment options, review important information and
+              monitor their account activity.
+            </p>
+          </div>
+
+          <div class="purpose-card">
+            <div class="purpose-icon">◇</div>
+            <h3>Our Vision</h3>
+            <p>
+              To build a recognised digital asset platform associated
+              with clarity, responsible practices, thoughtful technology
+              and a better-informed approach to investment management.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="section-label">Our principles</div>
+        <h2 class="section-heading">The values behind <span>our work.</span></h2>
+
+        <p class="section-text">
+          These are the principles we want to guide the development
+          and operation of the CodVest platform.
+        </p>
+
+        <div class="values-grid">
+
+          <div class="value-card">
+            <div class="number">01 / CLARITY</div>
+            <h3>Transparency</h3>
+            <p>
+              Important terms, fees, risks and account information
+              should be communicated clearly.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="number">02 / PROTECTION</div>
+            <h3>Security</h3>
+            <p>
+              Account protection and responsible handling of user
+              information should be central to platform design.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="number">03 / PROGRESS</div>
+            <h3>Innovation</h3>
+            <p>
+              We aim to use thoughtful technology to improve the
+              digital investment experience.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="number">04 / RESPONSIBILITY</div>
+            <h3>Accountability</h3>
+            <p>
+              Investment information and account records should be
+              handled with care and responsibility.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="number">05 / USERS</div>
+            <h3>User Experience</h3>
+            <p>
+              Platform features should be understandable and designed
+              around the needs of users.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="number">06 / AWARENESS</div>
+            <h3>Risk Education</h3>
+            <p>
+              Users should have access to meaningful information about
+              the risks of cryptocurrency investments.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="company-section">
+      <div class="container">
+
+        <div class="company-box">
+          <div class="section-label">Our parent company</div>
+          <h2>Powered by the vision of <span>CODLONT.</span></h2>
+          <p>
+            CodVest is a project developed under CODLONT. CODLONT's
+            broader vision includes the research, creation and development
+            of technology-driven products and services.
+          </p>
+          <a href="https://codlont.github.io/Codlontcompany/" target="_blank" rel="noopener noreferrer">
+            Visit CODLONT website →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-about">
+          <a href="index.html" class="brand">
+            <svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="footerGold" x1="10" y1="10" x2="90" y2="90">
+                  <stop stop-color="#F4DFAD"/>
+                  <stop offset="1" stop-color="#A47B35"/>
+                </linearGradient>
+              </defs>
+              <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#footerGold)" stroke-width="5"/>
+              <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3"/>
+              <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#footerGold)" stroke-width="3"/>
+              <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+            </svg>
+            Cod<span>Vest</span>
+          </a>
+          <p>
+            A cryptocurrency investment platform developed by CODLONT,
+            with a focus on structure, clarity and portfolio visibility.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h3>Platform</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="investment-plans.html">Investment Plans</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Account</h3>
+          <a href="login.html">Login</a>
+          <a href="register.html">Create Account</a>
+          <a href="contact.html">Contact Support</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Information</h3>
+          <a href="security.html">Security</a>
+          <a href="terms.html">Terms and Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> CodVest. A CODLONT company.</span>
+        <span>Cryptocurrency investments involve risk.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("active");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
