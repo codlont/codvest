@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Investment Plans | CodVest</title>
+  <meta name="description" content="Explore CodVest cryptocurrency investment levels and learn about the features of each option.">
+  <style>
+    :root {
+      --bg: #08090b;
+      --panel: #111317;
+      --panel-light: #171a20;
+      --gold: #d8b66e;
+      --gold-light: #f1dba7;
+      --silver: #c7cbd2;
+      --text: #f5f5f5;
+      --muted: #a2a6ae;
+      --border: rgba(255,255,255,.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,9,11,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .brand-symbol { width: 43px; height: 43px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold-light); }
+
+    .nav-button {
+      border: 1px solid var(--gold);
+      padding: 10px 17px;
+      border-radius: 5px;
+      color: var(--gold-light) !important;
+    }
+
+    .menu-button {
+      display: none;
+      color: var(--gold);
+      font-size: 28px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 105px 0 75px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(216,182,110,.13), transparent 55%);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 66px);
+      line-height: 1.12;
+      margin: 20px auto;
+      max-width: 850px;
+    }
+
+    h1 span { color: var(--gold-light); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 690px;
+      margin: 0 auto;
+      font-size: 16px;
+    }
+
+    .section { padding: 75px 0; }
+
+    .section-heading {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 45px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 12px 0;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .plan-card {
+      background: linear-gradient(145deg, #171a20, #0d0f12);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+      transition: .25s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(216,182,110,.6);
+    }
+
+    .plan-card.featured {
+      border-color: rgba(216,182,110,.65);
+    }
+
+    .plan-card h3 {
+      font-size: 25px;
+      margin: 10px 0;
+    }
+
+    .plan-card p {
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 72px;
+    }
+
+    .plan-number {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .plan-line {
+      height: 1px;
+      background: var(--border);
+      margin: 22px 0;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+
+    .plan-features li {
+      color: #d2d4d9;
+      font-size: 13px;
+      padding: 7px 0;
+    }
+
+    .plan-features li::before {
+      content: "✦";
+      color: var(--gold);
+      margin-right: 10px;
+    }
+
+    .plan-link {
+      display: block;
+      text-align: center;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .plan-link:hover {
+      background: var(--gold);
+      color: #090909;
+    }
+
+    .featured-label {
+      display: inline-block;
+      color: #090909;
+      background: var(--gold);
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .information {
+      background: #101216;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .information-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .info-card {
+      padding: 25px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .info-icon {
+      font-size: 25px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .info-card h3 { margin-bottom: 9px; }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .risk-box {
+      margin-top: 35px;
+      padding: 25px;
+      border: 1px solid rgba(216,182,110,.3);
+      border-radius: 8px;
+      background: rgba(216,182,110,.05);
+    }
+
+    .risk-box h3 {
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .risk-box p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 85px 20px;
+      background: radial-gradient(ellipse at center, rgba(216,182,110,.12), transparent 65%);
+    }
+
+    .cta h2 {
+      font-size: clamp(29px, 4vw, 42px);
+      margin-bottom: 14px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
+    .gold-button {
+      display: inline-block;
+      background: linear-gradient(120deg, #b38c48, #f0dba8);
+      color: #101010;
+      padding: 13px 25px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 82px;
+        left: 0;
+        width: 100%;
+        background: #0d0f12;
+        padding: 25px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.show { display: flex; }
+      .menu-button { display: block; }
+      .plans { grid-template-columns: repeat(2, 1fr); }
+      .information-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .plans { grid-template-columns: 1fr; }
+      .hero { padding: 75px 0 55px; }
+      .section { padding: 55px 0; }
+      .plan-card p { min-height: auto; }
+      .brand { font-size: 24px; }
+      .brand-symbol { width: 39px; height: 39px; }
+      .footer-content { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CodVest logo">
+        <defs>
+          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#goldGradient)" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+      Cod<span>Vest</span>
+    </a>
+
+    <button class="menu-button" id="menuButton" aria-label="Open navigation menu">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="investment-plans.html" class="active">Investment Plans</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html" class="nav-button">Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Investment Options</div>
+      <h1>Explore your <span>investment possibilities.</span></h1>
+      <p>
+        Discover the CodVest investment levels and learn about the different
+        account experiences being developed for our cryptocurrency platform.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">CodVest Plans</div>
+        <h2>Choose an investment level</h2>
+        <p>
+          Each level is designed to represent a different account category.
+          Eligibility, minimum deposits, fees and availability will be disclosed
+          clearly before any real investment is accepted.
+        </p>
+      </div>
+
+      <div class="plans">
+
+        <article class="plan-card">
+          <div class="plan-number">Level 01</div>
+          <h3>Starter</h3>
+          <p>
+            An introductory account category for people beginning to explore
+            cryptocurrency investment management.
+          </p>
+          <div class="plan-line"></div>
+          <ul class="plan-features">
+            <li>Introductory account category</li>
+            <li>Investment information access</li>
+            <li>Portfolio monitoring concept</li>
+            <li>Customer support information</li>
+          </ul>
+          <a href="contact.html" class="plan-link">Enquire About Starter</a>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-number">Level 02</div>
+          <h3>Silver</h3>
+          <p>
+            A developing account category for users looking for a broader
+            investment management experience.
+          </p>
+          <div class="plan-line"></div>
+          <ul class="plan-features">
+            <li>Silver account category</li>
+            <li>Investment information access</li>
+            <li>Portfolio monitoring concept</li>
+            <li>Account support information</li>
+          </ul>
+          <a href="contact.html" class="plan-link">Enquire About Silver</a>
+        </article>
+
+        <article class="plan-card featured">
+          <div class="featured-label">FEATURED CATEGORY</div>
+          <div class="plan-number" style="margin-top:15px;">Level 03</div>
+          <h3>Gold</h3>
+          <p>
+            A higher account category intended for users interested in an
+            expanded platform experience.
+          </p>
+          <div class="plan-line"></div>
+          <ul class="plan-features">
+            <li>Gold account category</li>
+            <li>Investment information access</li>
+            <li>Portfolio monitoring concept</li>
+            <li>Account support information</li>
+          </ul>
+          <a href="contact.html" class="plan-link">Enquire About Gold</a>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-number">Level 04</div>
+          <h3>Platinum</h3>
+          <p>
+            An advanced account category intended for users seeking a more
+            extensive management experience.
+          </p>
+          <div class="plan-line"></div>
+          <ul class="plan-features">
+            <li>Platinum account category</li>
+            <li>Investment information access</li>
+            <li>Portfolio monitoring concept</li>
+            <li>Account support information</li>
+          </ul>
+          <a href="contact.html" class="plan-link">Enquire About Platinum</a>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-number">Level 05</div>
+          <h3>Diamond</h3>
+          <p>
+            The highest proposed account category within the CodVest plan
+            structure.
+          </p>
+          <div class="plan-line"></div>
+          <ul class="plan-features">
+            <li>Diamond account category</li>
+            <li>Investment information access</li>
+            <li>Portfolio monitoring concept</li>
+            <li>Account support information</li>
+          </ul>
+          <a href="contact.html" class="plan-link">Enquire About Diamond</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section information">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Before You Invest</div>
+        <h2>Understand the important details</h2>
+        <p>
+          We believe users should understand how an investment works before
+          making a financial decision.
+        </p>
+      </div>
+
+      <div class="information-grid">
+        <article class="info-card">
+          <div class="info-icon">◇</div>
+          <h3>Clear Terms</h3>
+          <p>
+            Applicable fees, eligibility rules, investment terms and withdrawal
+            conditions should be explained before participation.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-icon">⌁</div>
+          <h3>Portfolio Visibility</h3>
+          <p>
+            The intended platform experience includes account information and
+            portfolio monitoring, subject to service availability.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-icon">◈</div>
+          <h3>Risk Awareness</h3>
+          <p>
+            Cryptocurrency markets can change rapidly. Users should understand
+            the risks and consider their financial circumstances.
+          </p>
+        </article>
+      </div>
+
+      <div class="risk-box">
+        <h3>Important Cryptocurrency Risk Notice</h3>
+        <p>
+          Cryptocurrency investments are high risk. Their value can rise or
+          fall significantly, and you may lose some or all of the money
+          invested. No plan guarantees profits or fixed returns. The plan
+          categories shown on this page describe the proposed CodVest platform
+          structure; they are not offers to accept deposits or confirmation
+          that investment services are currently available. Any live service
+          will be subject to applicable legal and regulatory approvals,
+          verification and published terms.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="eyebrow">Learn More</div>
+      <h2>Have questions about our plans?</h2>
+      <p>
+        Contact the CodVest team for information about the platform,
+        its proposed account categories and future availability.
+      </p>
+      <a href="contact.html" class="gold-button">Contact CodVest</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-content">
+    <div>© 2026 CodVest. A CODLONT company.</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuButton = document.getElementById("menuButton");
+  const navLinks = document.getElementById("navLinks");
+
+  menuButton.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("show");
+    });
+  });
+</script>
+
+</body>
+</html>
