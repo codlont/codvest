@@ -92,6 +92,24 @@
       background: #090b0e;
     }
 
+    /* COUNTRY SEARCH */
+
+    .country-wrapper {
+      position: relative;
+    }
+
+    .country-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+    }
+
+    .country-hint {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
     .password-wrapper {
       position: relative;
     }
@@ -298,6 +316,7 @@
             <input
               type="text"
               id="fullName"
+              name="fullName"
               placeholder="Your full name"
               autocomplete="name"
               required
@@ -309,6 +328,7 @@
             <input
               type="tel"
               id="phone"
+              name="phone"
               placeholder="Your phone number"
               autocomplete="tel"
               required
@@ -322,25 +342,37 @@
           <input
             type="email"
             id="email"
+            name="email"
             placeholder="Enter your email address"
             autocomplete="email"
             required
           >
         </div>
 
+        <!-- COUNTRY OF RESIDENCE -->
+
         <div class="form-group">
+
           <label for="country">Country of Residence</label>
-          <select id="country" required>
-            <option value="">Select your country</option>
-            <option value="Nigeria">Nigeria</option>
-            <option value="Ghana">Ghana</option>
-            <option value="South Africa">South Africa</option>
-            <option value="Kenya">Kenya</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
-            <option value="Other">Other</option>
-          </select>
+
+          <div class="country-wrapper">
+            <input
+              type="text"
+              id="country"
+              name="country"
+              list="countryList"
+              placeholder="Search or select your country"
+              autocomplete="country-name"
+              required
+            >
+
+            <datalist id="countryList"></datalist>
+          </div>
+
+          <small class="country-hint">
+            Type to search and select your country from the suggestions.
+          </small>
+
         </div>
 
         <div class="form-group">
@@ -350,6 +382,7 @@
             <input
               type="password"
               id="password"
+              name="password"
               placeholder="Create a strong password"
               autocomplete="new-password"
               minlength="8"
@@ -381,6 +414,7 @@
             <input
               type="password"
               id="confirmPassword"
+              name="confirmPassword"
               placeholder="Enter your password again"
               autocomplete="new-password"
               required
@@ -435,7 +469,85 @@
   </footer>
 
   <script>
-    // Show and hide passwords
+    // INTERNATIONAL COUNTRY LIST
+
+    const countryCodes = `
+      AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ
+      BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ
+      CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ
+      DE DJ DK DM DO DZ
+      EC EE EG EH ER ES ET
+      FI FJ FK FM FO FR
+      GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY
+      HK HM HN HR HT HU
+      ID IE IL IM IN IO IQ IR IS IT
+      JE JM JO JP
+      KE KG KH KI KM KN KP KR KW KY KZ
+      LA LB LC LI LK LR LS LT LU LV LY
+      MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ
+      NA NC NE NF NG NI NL NO NP NR NU NZ
+      OM
+      PA PE PF PG PH PK PL PM PN PR PS PT PW PY
+      QA
+      RE RO RS RU RW
+      SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ
+      TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ
+      UA UG UM US UY UZ
+      VA VC VE VG VI VN VU
+      WF WS
+      YE YT
+      ZA ZM ZW
+    `;
+
+    const countryNames = new Intl.DisplayNames(
+      ["en"],
+      { type: "region" }
+    );
+
+    const countries = countryCodes
+      .trim()
+      .split(/\s+/)
+      .map(code => ({
+        code,
+        name: countryNames.of(code)
+      }))
+      .filter(country =>
+        country.name && country.name !== country.code
+      )
+      .sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
+    const countryInput = document.getElementById("country");
+    const countryList = document.getElementById("countryList");
+
+    countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country.name;
+      countryList.appendChild(option);
+    });
+
+    function isValidCountry(value) {
+      return countries.some(
+        country => country.name === value.trim()
+      );
+    }
+
+    countryInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    countryInput.addEventListener("change", function () {
+      this.setCustomValidity(
+        isValidCountry(this.value)
+          ? ""
+          : "Please select a valid country from the suggestions."
+      );
+    });
+
+
+    // SHOW AND HIDE PASSWORDS
+
     document.querySelectorAll(".show-password").forEach(button => {
       button.addEventListener("click", function () {
         const input = document.getElementById(this.dataset.target);
@@ -446,7 +558,9 @@
       });
     });
 
-    // Password strength indicator
+
+    // PASSWORD STRENGTH INDICATOR
+
     const password = document.getElementById("password");
     const strengthBar = document.getElementById("strengthBar");
     const strengthText = document.getElementById("strengthText");
@@ -472,7 +586,9 @@
       strengthText.textContent = levels[score].text;
     });
 
-    // Registration form demonstration only
+
+    // REGISTRATION FORM DEMONSTRATION
+
     document.getElementById("registerForm").addEventListener("submit", function (event) {
       event.preventDefault();
 
@@ -482,8 +598,18 @@
 
       message.style.display = "block";
 
+      if (!isValidCountry(countryInput.value)) {
+        countryInput.setCustomValidity(
+          "Please select a valid country from the suggestions."
+        );
+        countryInput.reportValidity();
+        message.textContent = "Please select a valid country.";
+        return;
+      }
+
       if (passwordValue !== confirmValue) {
-        message.textContent = "Your passwords do not match. Please check and try again.";
+        message.textContent =
+          "Your passwords do not match. Please check and try again.";
         return;
       }
 
