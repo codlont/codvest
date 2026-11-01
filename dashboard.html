@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Dashboard | CodVest</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #08090b;
+      color: #f5f5f5;
+      font-family: Arial, Helvetica, sans-serif;
+      transition: background .3s, color .3s;
+    }
+
+    button, select { font: inherit; }
+
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      min-height: 100vh;
+      padding: 25px 18px;
+      background: #0d0f12;
+      border-right: 1px solid rgba(201,164,92,.18);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: background .3s;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 8px 28px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .sidebar-brand span { color: #f0dba8; }
+
+    .sidebar-brand svg {
+      width: 39px;
+      height: 39px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-label {
+      padding: 15px 10px 9px;
+      color: #737983;
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px;
+      color: #a2a6ae;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: .25s ease;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: #f0dba8;
+      background: rgba(201,164,92,.09);
+    }
+
+    .nav-icon {
+      width: 19px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 25px;
+    }
+
+    .sidebar-bottom a {
+      display: block;
+      padding: 12px;
+      color: #a2a6ae;
+      font-size: 13px;
+    }
+
+    .sidebar-bottom a:hover { color: #f0dba8; }
+
+    /* MAIN AREA */
+
+    .dashboard-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 76px;
+      padding: 0 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-bottom: 1px solid rgba(201,164,92,.15);
+      background: #0b0d10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .topbar h1 {
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .account-tag {
+      color: #c9a45c;
+      font-size: 11px;
+      border: 1px solid rgba(201,164,92,.3);
+      padding: 7px 11px;
+      border-radius: 20px;
+    }
+
+    .profile-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(201,164,92,.13);
+      border: 1px solid rgba(201,164,92,.35);
+      color: #f0dba8;
+      font-weight: 700;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      color: #f0dba8;
+      border: 0;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    /* CONTENT */
+
+    .dashboard-content {
+      max-width: 1400px;
+      margin: auto;
+      padding: 32px 35px 50px;
+    }
+
+    .welcome-section {
+      margin-bottom: 28px;
+    }
+
+    .welcome-section .eyebrow {
+      margin-bottom: 8px;
+    }
+
+    .welcome-section h2 {
+      font-size: clamp(24px, 4vw, 32px);
+      margin-bottom: 7px;
+    }
+
+    .welcome-section h2 span { color: #f0dba8; }
+
+    .welcome-section p {
+      color: #a2a6ae;
+      font-size: 13px;
+    }
+
+    /* NOTICE */
+
+    .demo-notice {
+      padding: 16px 18px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(201,164,92,.3);
+      background: rgba(201,164,92,.055);
+      border-radius: 7px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .notice-icon {
+      color: #f0dba8;
+      font-size: 20px;
+    }
+
+    .demo-notice strong {
+      display: block;
+      color: #f0dba8;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .demo-notice p {
+      color: #a2a6ae;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* SUMMARY */
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 17px;
+      margin-bottom: 27px;
+    }
+
+    .summary-card {
+      padding: 22px;
+      background: linear-gradient(145deg, #15171c, #101216);
+      border: 1px solid rgba(201,164,92,.17);
+      border-radius: 8px;
+    }
+
+    .summary-card:hover {
+      border-color: rgba(201,164,92,.4);
+    }
+
+    .summary-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 23px;
+    }
+
+    .summary-title {
+      color: #a2a6ae;
+      font-size: 12px;
+    }
+
+    .summary-icon {
+      color: #e5c987;
+      font-size: 20px;
+    }
+
+    .summary-value {
+      font-size: 25px;
+      font-weight: 700;
+      color: #f5f5f5;
+      margin-bottom: 5px;
+    }
+
+    .summary-description {
+      color: #777e88;
+      font-size: 11px;
+    }
+
+    /* MAIN GRID */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .dashboard-panel {
+      padding: 23px;
+      background: #111317;
+      border: 1px solid rgba(201,164,92,.16);
+      border-radius: 8px;
+      min-width: 0;
+    }
+
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .panel-heading h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .panel-heading a {
+      color: #e5c987;
+      font-size: 11px;
+    }
+
+    /* PORTFOLIO */
+
+    .portfolio-empty {
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 1px dashed rgba(201,164,92,.2);
+      border-radius: 7px;
+      padding: 20px;
+    }
+
+    .portfolio-empty .empty-icon {
+      font-size: 31px;
+      color: #c9a45c;
+      margin-bottom: 12px;
+    }
+
+    .portfolio-empty h4 {
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    .portfolio-empty p {
+      color: #858b95;
+      font-size: 11px;
+      max-width: 270px;
+    }
+
+    /* ACCOUNT STATUS */
+
+    .status-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .status-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .status-name {
+      color: #a2a6ae;
+      font-size: 12px;
+    }
+
+    .status-value {
+      color: #e2e3e6;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .status-pending { color: #e5c987; }
+
+    /* PLANS */
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .plan-option {
+      padding: 17px 12px;
+      text-align: center;
+      background: #0d0f12;
+      border: 1px solid rgba(201,164,92,.17);
+      border-radius: 7px;
+      transition: .25s ease;
+    }
+
+    .plan-option:hover {
+      border-color: #c9a45c;
+      transform: translateY(-3px);
+    }
+
+    .plan-option h4 {
+      font-size: 13px;
+      color: #f0dba8;
+      margin-bottom: 8px;
+    }
+
+    .plan-option p {
+      font-size: 10px;
+      color: #858b95;
+    }
+
+    .plan-note {
+      margin-top: 16px;
+      color: #858b95;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    /* TRANSACTIONS */
+
+    .activity-empty {
+      padding: 25px 10px;
+      text-align: center;
+      color: #858b95;
+      font-size: 12px;
+    }
+
+    /* SETTINGS */
+
+    .settings-button,
+    .language-select {
+      padding: 10px 14px;
+      border: 1px solid rgba(201,164,92,.35);
+      border-radius: 5px;
+      background: #0d0f12;
+      color: #f0dba8;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .settings-button:hover {
+      background: rgba(201,164,92,.12);
+    }
+
+    .language-select {
+      min-width: 125px;
+    }
+
+    .settings-description {
+      color: #858b95;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    /* FOOTER */
+
+    .dashboard-footer {
+      padding: 22px 35px;
+      border-top: 1px solid rgba(201,164,92,.13);
+      color: #777e88;
+      font-size: 11px;
+    }
+
+    /* LIGHT MODE */
+
+    body.light-mode {
+      background: #f2f3f5;
+      color: #20232a;
+    }
+
+    body.light-mode .sidebar,
+    body.light-mode .topbar,
+    body.light-mode .dashboard-panel,
+    body.light-mode .summary-card {
+      background: #ffffff;
+      color: #20232a;
+    }
+
+    body.light-mode .sidebar {
+      border-color: #dedfe3;
+    }
+
+    body.light-mode .topbar,
+    body.light-mode .dashboard-footer {
+      border-color: #dedfe3;
+    }
+
+    body.light-mode .dashboard-panel,
+    body.light-mode .summary-card {
+      border-color: #dedfe3;
+    }
+
+    body.light-mode .sidebar-nav a {
+      color: #626873;
+    }
+
+    body.light-mode .sidebar-nav a:hover,
+    body.light-mode .sidebar-nav a.active {
+      color: #98712f;
+      background: rgba(201,164,92,.13);
+    }
+
+    body.light-mode .sidebar-label {
+      color: #858b95;
+    }
+
+    body.light-mode .sidebar-bottom a {
+      color: #626873;
+    }
+
+    body.light-mode .welcome-section p,
+    body.light-mode .summary-title,
+    body.light-mode .summary-description,
+    body.light-mode .status-name,
+    body.light-mode .status-value,
+    body.light-mode .plan-note,
+    body.light-mode .activity-empty {
+      color: #626873;
+    }
+
+    body.light-mode .portfolio-empty,
+    body.light-mode .plan-option {
+      background: #f7f7f8;
+      color: #20232a;
+      border-color: #dedfe3;
+    }
+
+    body.light-mode .portfolio-empty p,
+    body.light-mode .plan-option p {
+      color: #626873;
+    }
+
+    body.light-mode .dashboard-footer {
+      background: #ffffff;
+      color: #626873;
+    }
+
+    body.light-mode .demo-notice {
+      background: #fff9eb;
+    }
+
+    body.light-mode .demo-notice p {
+      color: #626873;
+    }
+
+    body.light-mode .settings-button,
+    body.light-mode .language-select {
+      background: #ffffff;
+      color: #76551e;
+    }
+
+    body.light-mode .panel-heading h3,
+    body.light-mode .summary-value,
+    body.light-mode .welcome-section h2,
+    body.light-mode .status-item strong {
+      color: #20232a;
+    }
+
+    body.light-mode .status-item {
+      border-color: #e5e5e5;
+    }
+
+    body.light-mode .settings-description {
+      color: #626873;
+    }
+
+    body.light-mode .profile-circle {
+      color: #76551e;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1050px) {
+      .sidebar { width: 220px; }
+      .plans-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        position: fixed;
+        z-index: 200;
+        top: 0;
+        left: -260px;
+        width: 250px;
+        height: 100vh;
+        transition: left .3s ease;
+      }
+
+      .sidebar.open { left: 0; }
+
+      .menu-toggle { display: block; }
+
+      .topbar { padding: 0 20px; }
+
+      .dashboard-content { padding: 25px 20px 40px; }
+
+      .content-grid { grid-template-columns: 1fr; }
+
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .dashboard-footer { padding: 20px; }
+    }
+
+    @media (max-width: 520px) {
+      .summary-grid { grid-template-columns: 1fr; }
+
+      .plans-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .topbar h1 { font-size: 16px; }
+
+      .account-tag { display: none; }
+
+      .dashboard-content { padding: 22px 15px 35px; }
+
+      .dashboard-panel { padding: 18px; }
+
+      .status-item {
+        align-items: flex-start;
+      }
+
+      .settings-button,
+      .language-select {
+        max-width: 135px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <a href="index.html" class="sidebar-brand">
+      <svg viewBox="0 0 100 100" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="brandGold" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z"
+          stroke="url(#brandGold)" stroke-width="5"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z"
+          stroke="#E5D1A1" stroke-width="3"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
+          stroke="url(#brandGold)" stroke-width="3"
+          stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+      Cod<span>Vest</span>
+    </a>
+
+    <div class="sidebar-label">MAIN MENU</div>
+
+    <nav class="sidebar-nav">
+      <a href="#overview" class="active">
+        <span class="nav-icon">▦</span> Overview
+      </a>
+
+      <a href="#portfolio">
+        <span class="nav-icon">◈</span> My Portfolio
+      </a>
+
+      <a href="#plans">
+        <span class="nav-icon">◇</span> Investment Plans
+      </a>
+
+      <a href="#transactions">
+        <span class="nav-icon">⇄</span> Transactions
+      </a>
+    </nav>
+
+    <div class="sidebar-label">ACCOUNT</div>
+
+    <nav class="sidebar-nav">
+      <a href="#profile">
+        <span class="nav-icon">♙</span> My Profile
+      </a>
+
+      <a href="security.html">
+        <span class="nav-icon">♢</span> Security
+      </a>
+
+      <a href="contact.html">
+        <span class="nav-icon">✉</span> Support
+      </a>
+
+      <a href="#settings">
+        <span class="nav-icon">⚙</span> Settings
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="divider"></div>
+      <a href="index.html">← Back to Website</a>
+      <a href="login.html">↪ Sign Out</a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN DASHBOARD -->
+
+  <main class="dashboard-main">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle"
+          aria-label="Open menu">☰</button>
+        <h1>Dashboard</h1>
+      </div>
+
+      <div class="topbar-right">
+        <span class="account-tag">CUSTOMER AREA</span>
+        <div class="profile-circle">C</div>
+      </div>
+
+    </header>
+
+    <div class="dashboard-content" id="overview">
+
+      <!-- WELCOME -->
+
+      <section class="welcome-section">
+        <div class="eyebrow">CODVEST ACCOUNT</div>
+        <h2>Welcome to <span>CodVest</span></h2>
+        <p>Your account overview and investment management centre.</p>
+      </section>
+
+      <!-- DEMO NOTICE -->
+
+      <div class="demo-notice">
+        <div class="notice-icon">ⓘ</div>
+        <div>
+          <strong>Dashboard preview</strong>
+          <p>
+            Your dashboard is currently in preview mode.
+            Account balances, investments, deposits and transactions
+            will appear here after secure account and database integration.
+          </p>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+
+      <section class="summary-grid">
+
+        <div class="summary-card">
+          <div class="summary-top">
+            <span class="summary-title">Total Portfolio Value</span>
+            <span class="summary-icon">◈</span>
+          </div>
+          <div class="summary-value">—</div>
+          <div class="summary-description">Awaiting account connection</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-top">
+            <span class="summary-title">Active Investments</span>
+            <span class="summary-icon">◇</span>
+          </div>
+          <div class="summary-value">—</div>
+          <div class="summary-description">No investment data connected</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-top">
+            <span class="summary-title">Account Status</span>
+            <span class="summary-icon">♢</span>
+          </div>
+          <div class="summary-value" style="font-size:19px;">Preview</div>
+          <div class="summary-description">Verification not connected</div>
+        </div>
+
+      </section>
+
+      <!-- PORTFOLIO AND ACCOUNT STATUS -->
+
+      <section class="content-grid">
+
+        <div class="dashboard-panel" id="portfolio">
+
+          <div class="panel-heading">
+            <h3>My Portfolio</h3>
+            <span class="summary-icon">◈</span>
+          </div>
+
+          <div class="portfolio-empty">
+            <div class="empty-icon">◇</div>
+            <h4>Your portfolio will appear here</h4>
+            <p>
+              Your supported cryptocurrency holdings and portfolio
+              information will be displayed when your account is connected.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="dashboard-panel" id="profile">
+
+          <div class="panel-heading">
+            <h3>Account Information</h3>
+            <a href="security.html">Security</a>
+          </div>
+
+          <div class="status-list">
+
+            <div class="status-item">
+              <span class="status-name">Account Type</span>
+              <span class="status-value">Customer</span>
+            </div>
+
+            <div class="status-item">
+              <span class="status-name">Email Verification</span>
+              <span class="status-value status-pending">Not connected</span>
+            </div>
+
+            <div class="status-item">
+              <span class="status-name">Identity Verification</span>
+              <span class="status-value status-pending">Not connected</span>
+            </div>
+
+            <div class="status-item">
+              <span class="status-name">Investment Account</span>
+              <span class="status-value status-pending">Not activated</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- INVESTMENT PLANS -->
+
+      <section class="dashboard-panel" id="plans">
+
+        <div class="panel-heading">
+          <h3>Available Investment Plans</h3>
+          <a href="investment-plans.html">View Details →</a>
+        </div>
+
+        <div class="plans-grid">
+
+          <div class="plan-option">
+            <h4>Starter</h4>
+            <p>Entry-level category</p>
+          </div>
+
+          <div class="plan-option">
+            <h4>Silver</h4>
+            <p>Account category</p>
+          </div>
+
+          <div class="plan-option">
+            <h4>Gold</h4>
+            <p>Account category</p>
+          </div>
+
+          <div class="plan-option">
+            <h4>Platinum</h4>
+            <p>Account category</p>
+          </div>
+
+          <div class="plan-option">
+            <h4>Diamond</h4>
+            <p>Account category</p>
+          </div>
+
+        </div>
+
+        <p class="plan-note">
+          Plan availability, eligibility, fees, minimum amounts and terms
+          must be confirmed before any investment is accepted.
+          Cryptocurrency investments involve risk, including loss of capital.
+        </p>
+
+      </section>
+
+      <!-- TRANSACTIONS -->
+
+      <section class="dashboard-panel" id="transactions"
+        style="margin-top:25px;">
+
+        <div class="panel-heading">
+          <h3>Recent Transactions</h3>
+        </div>
+
+        <div class="activity-empty">
+          No transaction records are available yet.
+          <br>
+          Your verified transaction history will appear here after integration.
+        </div>
+
+      </section>
+
+      <!-- SETTINGS -->
+
+      <section class="dashboard-panel" id="settings"
+        style="margin-top:25px;">
+
+        <div class="panel-heading">
+          <h3>Settings</h3>
+          <span class="summary-icon">⚙</span>
+        </div>
+
+        <div class="status-list">
+
+          <div class="status-item">
+            <div>
+              <strong>Appearance</strong>
+              <p class="settings-description">
+                Choose your preferred dashboard theme.
+              </p>
+            </div>
+
+            <button id="themeToggle" class="settings-button"
+              type="button">
+              Light Mode
+            </button>
+          </div>
+
+          <div class="status-item">
+            <div>
+              <strong>Language</strong>
+              <p class="settings-description">
+                Select your preferred language.
+              </p>
+            </div>
+
+            <select id="languageSelect" class="language-select">
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="ar">العربية</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+
+        </div>
+
+        <p class="plan-note" id="settingsMessage" aria-live="polite">
+          Your preferences are saved on this device.
+        </p>
+
+      </section>
+
+    </div>
+
+    <footer class="dashboard-footer">
+      © 2026 CodVest. A CODLONT company. All rights reserved.
+      Cryptocurrency investments involve risk.
+    </footer>
+
+  </main>
+
+</div>
+
+<script>
+  // MOBILE SIDEBAR
+
+  const menuToggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("sidebar");
+
+  menuToggle.addEventListener("click", function () {
+    sidebar.classList.toggle("open");
+  });
+
+  document.querySelectorAll(".sidebar-nav a").forEach(link => {
+    link.addEventListener("click", function () {
+      document.querySelectorAll(".sidebar-nav a").forEach(item => {
+        item.classList.remove("active");
+      });
+
+      this.classList.add("active");
+      sidebar.classList.remove("open");
+    });
+  });
+
+
+  // DARK MODE AND LIGHT MODE
+
+  const themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(theme) {
+    document.body.classList.toggle(
+      "light-mode",
+      theme === "light"
+    );
+
+    themeToggle.textContent =
+      theme === "dark" ? "Light Mode" : "Dark Mode";
+
+    localStorage.setItem("codvest-theme", theme);
+  }
+
+  const savedTheme =
+    localStorage.getItem("codvest-theme") || "dark";
+
+  applyTheme(savedTheme);
+
+  themeToggle.addEventListener("click", function () {
+    const newTheme =
+      document.body.classList.contains("light-mode")
+        ? "dark"
+        : "light";
+
+    applyTheme(newTheme);
+  });
+
+
+  // LANGUAGE PREFERENCE
+
+  const languageSelect =
+    document.getElementById("languageSelect");
+
+  const settingsMessage =
+    document.getElementById("settingsMessage");
+
+  const languageMessages = {
+    en: "Your preferences are saved on this device.",
+    fr: "Vos préférences sont enregistrées sur cet appareil.",
+    ar: "يتم حفظ تفضيلاتك على هذا الجهاز.",
+    pt: "As suas preferências são guardadas neste dispositivo."
+  };
+
+  const savedLanguage =
+    localStorage.getItem("codvest-language") || "en";
+
+  languageSelect.value = savedLanguage;
+
+  function applyLanguagePreference(language) {
+    settingsMessage.textContent =
+      languageMessages[language] || languageMessages.en;
+
+    document.documentElement.lang = language;
+
+    document.documentElement.dir =
+      language === "ar" ? "rtl" : "ltr";
+
+    localStorage.setItem("codvest-language", language);
+  }
+
+  applyLanguagePreference(savedLanguage);
+
+  languageSelect.addEventListener("change", function () {
+    applyLanguagePreference(this.value);
+  });
+
+</script>
+
+</body>
+</html>
