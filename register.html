@@ -57,11 +57,12 @@ body {
   color:#111;font-weight:700;cursor:pointer;transition:.3s
 }
 .register-submit:hover {transform:translateY(-2px);box-shadow:0 7px 22px rgba(201,164,92,.18)}
+.register-submit:disabled {opacity:.6;cursor:not-allowed;transform:none}
 .register-message {
   display:none;margin-top:18px;padding:12px;
   border:1px solid rgba(201,164,92,.25);border-radius:6px;
   color:var(--gold-light);background:rgba(201,164,92,.06);
-  font-size:12px;text-align:center
+  font-size:12px;text-align:center;line-height:1.6
 }
 .login-link {margin-top:25px;text-align:center;color:var(--muted);font-size:13px}
 .register-security {
@@ -199,7 +200,6 @@ Cod<span>Vest</span>
 </div>
 </div>
 
-<!-- REQUIRED TERMS AGREEMENT -->
 <label class="terms">
 <input type="checkbox" id="agreeTerms" required>
 <span>
@@ -209,14 +209,13 @@ and <a href="privacy.html">Privacy Policy</a>.
 </span>
 </label>
 
-<!-- REQUIRED AGE CONFIRMATION -->
 <label class="age-confirm">
 <input type="checkbox" id="ageConfirm" required>
 <span>I confirm that I am at least 18 years old and legally eligible to use this service in my country of residence.</span>
 </label>
 
 <button type="submit" class="register-submit">Create Account</button>
-<div class="register-message" id="registerMessage" role="status"></div>
+<div class="register-message" id="registerMessage" role="status" aria-live="polite"></div>
 
 </form>
 
@@ -225,7 +224,7 @@ Already have an account? <a href="login.html">Login</a>
 </div>
 
 <div class="register-security">
-<span>◆</span> Account verification and secure registration will be enabled when the backend is connected.
+<span>◆</span> Registration is connected to the CodVest account service. Account verification may still be required before investment services are available.
 <br>CODLONT Company
 </div>
 
@@ -314,12 +313,15 @@ Already have an account? <a href="login.html">Login</a>
 </div>
 
 <script>
+// CODVEST BACKEND
+const API_URL = "https://codvest-backend.onrender.com";
+
 // COUNTRY LIST
 const countryCodes = `
 AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ
 BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ
 CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ
-DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR
+DE DJ DK DM DO DZ EC EE EG ES ET FI FJ FK FM FO FR
 GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY
 HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP
 KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY
@@ -381,6 +383,7 @@ password.addEventListener("input", function() {
     ["75%","Good password"],
     ["100%","Strong password"]
   ];
+
   strengthBar.style.width = levels[score][0];
   strengthText.textContent = levels[score][1];
 });
@@ -398,6 +401,8 @@ function openModal() {
   document.body.style.overflow = "hidden";
   acceptButton.disabled = true;
   termsContent.scrollTop = 0;
+  document.getElementById("readNote").textContent =
+    "Please scroll to the bottom of the agreement to enable the I Agree button.";
 }
 
 function closeModal() {
@@ -443,41 +448,116 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
-// FORM VALIDATION
-document.getElementById("registerForm").addEventListener("submit", function(event) {
+// REGISTRATION SUBMISSION
+const registerForm = document.getElementById("registerForm");
+const registerMessage = document.getElementById("registerMessage");
+const submitButton = registerForm.querySelector(".register-submit");
+
+registerForm.addEventListener("submit", async function(event) {
   event.preventDefault();
 
-  const message = document.getElementById("registerMessage");
-  const confirmPassword = document.getElementById("confirmPassword").value;
-  const ageConfirm = document.getElementById("ageConfirm");
+  const confirmPassword =
+    document.getElementById("confirmPassword").value;
 
-  message.style.display = "block";
+  const ageConfirm =
+    document.getElementById("ageConfirm");
 
+  registerMessage.style.display = "block";
+  registerMessage.style.color = "var(--gold-light)";
+
+  // Validate country
   if (!validCountry(countryInput.value)) {
-    message.textContent = "Please select a valid country of residence.";
+    registerMessage.textContent =
+      "Please select a valid country of residence.";
     countryInput.focus();
     return;
   }
 
+  // Validate password confirmation
   if (password.value !== confirmPassword) {
-    message.textContent = "Your passwords do not match.";
+    registerMessage.textContent =
+      "Your passwords do not match.";
+    document.getElementById("confirmPassword").focus();
     return;
   }
 
+  // Validate terms agreement
   if (!termsAccepted || !agreeCheckbox.checked) {
-    message.textContent = "Please read and accept the Terms and Conditions.";
+    registerMessage.textContent =
+      "Please read and accept the Terms and Conditions.";
     openModal();
     return;
   }
 
+  // Validate age confirmation
   if (!ageConfirm.checked) {
-    message.textContent = "You must confirm that you are at least 18 years old.";
+    registerMessage.textContent =
+      "You must confirm that you are at least 18 years old.";
     ageConfirm.focus();
     return;
   }
 
-  message.textContent =
-    "Your details have been validated in this demo. Secure registration is not connected yet. No account has been created.";
+  const registrationData = {
+    fullName: document.getElementById("fullName").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    country: countryInput.value.trim(),
+    password: password.value,
+    termsAccepted: true,
+    ageConfirmed: true
+  };
+
+  // Prevent duplicate submissions
+  submitButton.disabled = true;
+  submitButton.textContent = "Creating Account...";
+  registerMessage.textContent =
+    "Connecting securely to CodVest...";
+
+  try {
+    const response = await fetch(
+      `${API_URL}/api/auth/register`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(registrationData)
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.error || "Registration could not be completed."
+      );
+    }
+
+    registerMessage.textContent =
+      "Your account has been created successfully. Redirecting...";
+
+    registerMessage.style.color = "#8ed6a5";
+
+    registerForm.reset();
+    termsAccepted = false;
+
+    setTimeout(function() {
+      window.location.href = "dashboard.html";
+    }, 1200);
+
+  } catch (error) {
+    console.error("CodVest registration error:", error);
+
+    registerMessage.textContent =
+      error.message ||
+      "Unable to connect to CodVest. Please try again.";
+
+    registerMessage.style.color = "#ff9999";
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Create Account";
+  }
 });
 </script>
 
