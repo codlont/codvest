@@ -2,621 +2,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08090b">
-  <title>Create Account | CodVest</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090b">
+<title>Create Account | CodVest</title>
+<link rel="stylesheet" href="style.css">
 
-  <link rel="stylesheet" href="style.css">
+<style>
+body {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:radial-gradient(circle at 50% 15%,rgba(201,164,92,.09),transparent 42%),#08090b;
+}
+.register-header {padding:20px 5%;border-bottom:1px solid rgba(201,164,92,.18)}
+.register-header .brand {display:inline-flex;align-items:center;gap:0}
+.register-header .brand span {margin-left:-5px}
+.register-main {flex:1;display:flex;justify-content:center;align-items:center;padding:55px 20px}
+.register-card {
+  width:100%;max-width:540px;padding:40px;
+  background:linear-gradient(145deg,#15171c,#0e1014);
+  border:1px solid rgba(201,164,92,.2);border-radius:12px;
+  box-shadow:0 20px 70px rgba(0,0,0,.35)
+}
+.register-heading {text-align:center;margin-bottom:30px}
+.register-heading h1 {font-size:30px;margin:10px 0}
+.register-heading h1 span {color:var(--gold-light)}
+.register-heading p {color:var(--muted);font-size:14px}
+.register-logo {width:58px;height:58px;margin:0 auto 15px}
+.register-grid {display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+.register-form .form-group {margin-bottom:18px}
+.register-form input,.register-form select {background:#090b0e}
+.password-wrapper {position:relative}
+.password-wrapper input {padding-right:70px}
+.show-password {
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--gold-light);font-size:12px;cursor:pointer
+}
+.password-strength {height:4px;margin-top:9px;background:#292c32;border-radius:5px;overflow:hidden}
+.strength-bar {width:0;height:100%;background:var(--gold);transition:.3s}
+.strength-text {display:block;margin-top:5px;color:var(--muted);font-size:10px}
+.country-hint {display:block;margin-top:6px;color:var(--muted);font-size:10px}
+.terms,.age-confirm {
+  display:flex;align-items:flex-start;gap:10px;
+  margin:14px 0;color:var(--muted);font-size:12px;line-height:1.6
+}
+.terms input,.age-confirm input {
+  width:auto;margin-top:4px;accent-color:var(--gold);flex-shrink:0
+}
+.terms a,.login-link a {color:var(--gold-light);font-weight:700}
+.register-submit {
+  width:100%;padding:14px;border:none;border-radius:5px;
+  background:linear-gradient(110deg,#b38c48,#f0dba8);
+  color:#111;font-weight:700;cursor:pointer;transition:.3s
+}
+.register-submit:hover {transform:translateY(-2px);box-shadow:0 7px 22px rgba(201,164,92,.18)}
+.register-message {
+  display:none;margin-top:18px;padding:12px;
+  border:1px solid rgba(201,164,92,.25);border-radius:6px;
+  color:var(--gold-light);background:rgba(201,164,92,.06);
+  font-size:12px;text-align:center
+}
+.login-link {margin-top:25px;text-align:center;color:var(--muted);font-size:13px}
+.register-security {
+  margin-top:25px;padding-top:20px;border-top:1px solid rgba(201,164,92,.15);
+  text-align:center;color:var(--muted);font-size:11px;line-height:1.8
+}
+.register-security span {color:var(--gold-light)}
+.register-footer {
+  padding:20px;text-align:center;border-top:1px solid rgba(201,164,92,.15);
+  color:var(--muted);font-size:11px
+}
 
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background:
-        radial-gradient(circle at 50% 15%, rgba(201,164,92,.09), transparent 42%),
-        #08090b;
-    }
+/* TERMS POPUP */
 
-    .register-header {
-      padding: 20px 5%;
-      border-bottom: 1px solid rgba(201,164,92,.18);
-    }
+.modal-overlay {
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.85);padding:20px;
+  align-items:center;justify-content:center
+}
+.modal-overlay.active {display:flex}
+.terms-modal {
+  width:100%;max-width:650px;max-height:90vh;
+  display:flex;flex-direction:column;
+  background:#111317;border:1px solid rgba(216,182,110,.35);
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 20px 80px rgba(0,0,0,.6)
+}
+.modal-header {
+  padding:20px 24px;border-bottom:1px solid rgba(216,182,110,.2);
+  display:flex;justify-content:space-between;align-items:center
+}
+.modal-header h2 {font-size:20px;color:var(--gold-light);margin:0}
+.modal-close {
+  border:none;background:none;color:#fff;font-size:25px;cursor:pointer
+}
+.modal-content {
+  padding:22px 25px;overflow-y:auto;color:#c5c7cc;
+  font-size:13px;line-height:1.8
+}
+.modal-content h3 {color:var(--gold-light);font-size:14px;margin:20px 0 6px}
+.modal-content p {margin-bottom:12px}
+.modal-footer {
+  padding:18px 24px;border-top:1px solid rgba(216,182,110,.2);
+  display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap
+}
+.modal-button {
+  padding:12px 18px;border-radius:5px;border:1px solid #a98a50;
+  cursor:pointer;font-weight:600
+}
+.modal-decline {background:transparent;color:#ddd}
+.modal-agree {background:linear-gradient(110deg,#b38c48,#f0dba8);color:#111;border:none}
+.modal-agree:disabled {opacity:.4;cursor:not-allowed}
+.read-note {color:var(--gold-light);font-size:11px;margin-top:12px}
 
-    .register-header .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .register-header .brand span {
-      margin-left: -5px;
-    }
-
-    .register-main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 55px 20px;
-    }
-
-    .register-card {
-      width: 100%;
-      max-width: 540px;
-      padding: 40px;
-      background: linear-gradient(145deg, #15171c, #0e1014);
-      border: 1px solid rgba(201,164,92,.2);
-      border-radius: 12px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.35);
-    }
-
-    .register-heading {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .register-heading h1 {
-      font-size: 30px;
-      margin: 10px 0;
-    }
-
-    .register-heading h1 span {
-      color: var(--gold-light);
-    }
-
-    .register-heading p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .register-logo {
-      width: 58px;
-      height: 58px;
-      margin: 0 auto 15px;
-    }
-
-    .register-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 15px;
-    }
-
-    .register-form .form-group {
-      margin-bottom: 18px;
-    }
-
-    .register-form input,
-    .register-form select {
-      background: #090b0e;
-    }
-
-    /* COUNTRY SEARCH */
-
-    .country-wrapper {
-      position: relative;
-    }
-
-    .country-wrapper input {
-      width: 100%;
-      padding-right: 40px;
-    }
-
-    .country-hint {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .password-wrapper {
-      position: relative;
-    }
-
-    .password-wrapper input {
-      padding-right: 70px;
-    }
-
-    .show-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--gold-light);
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .password-strength {
-      height: 4px;
-      margin-top: 9px;
-      background: #292c32;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .strength-bar {
-      width: 0;
-      height: 100%;
-      background: var(--gold);
-      transition: .3s ease;
-    }
-
-    .strength-text {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .terms {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin: 8px 0 23px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .terms input {
-      width: auto;
-      margin-top: 4px;
-      accent-color: var(--gold);
-    }
-
-    .terms a {
-      color: var(--gold-light);
-    }
-
-    .register-submit {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 5px;
-      background: linear-gradient(110deg, #b38c48, #f0dba8);
-      color: #111;
-      font-weight: 700;
-      cursor: pointer;
-      transition: .3s ease;
-    }
-
-    .register-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 22px rgba(201,164,92,.18);
-    }
-
-    .register-message {
-      display: none;
-      margin-top: 18px;
-      padding: 12px;
-      border: 1px solid rgba(201,164,92,.25);
-      border-radius: 6px;
-      color: var(--gold-light);
-      background: rgba(201,164,92,.06);
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .login-link {
-      margin-top: 25px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .login-link a {
-      color: var(--gold-light);
-      font-weight: 700;
-    }
-
-    .register-security {
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(201,164,92,.15);
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .register-security span {
-      color: var(--gold-light);
-    }
-
-    .register-footer {
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid rgba(201,164,92,.15);
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    @media (max-width: 600px) {
-      .register-card {
-        padding: 28px 22px;
-      }
-
-      .register-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .register-heading h1 {
-        font-size: 26px;
-      }
-    }
-  </style>
+@media(max-width:600px) {
+  .register-card {padding:28px 22px}
+  .register-grid {grid-template-columns:1fr}
+  .register-heading h1 {font-size:26px}
+  .modal-content {padding:18px}
+}
+</style>
 </head>
 
 <body>
 
-  <header class="register-header">
-    <a href="index.html" class="brand">
-
-      <svg class="brand-symbol" viewBox="0 0 100 100"
-        fill="none" xmlns="http://www.w3.org/2000/svg"
-        aria-label="CodVest logo">
-        <defs>
-          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
-            <stop stop-color="#F4DFAD"/>
-            <stop offset="1" stop-color="#A47B35"/>
-          </linearGradient>
-        </defs>
-        <path d="M50 7L85 50L50 93L15 50L50 7Z"
-          stroke="url(#goldGradient)" stroke-width="5"/>
-        <path d="M50 24L70 50L50 76L30 50L50 24Z"
-          stroke="#E5D1A1" stroke-width="3"/>
-        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
-          stroke="url(#goldGradient)" stroke-width="3"
-          stroke-linecap="round"/>
-        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
-      </svg>
-
-      Cod<span>Vest</span>
-    </a>
-  </header>
-
-  <main class="register-main">
-
-    <section class="register-card">
-
-      <div class="register-heading">
-
-        <svg class="register-logo" viewBox="0 0 100 100"
-          fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="registerGold" x1="10" y1="10" x2="90" y2="90">
-              <stop stop-color="#F4DFAD"/>
-              <stop offset="1" stop-color="#A47B35"/>
-            </linearGradient>
-          </defs>
-          <path d="M50 7L85 50L50 93L15 50L50 7Z"
-            stroke="url(#registerGold)" stroke-width="5"/>
-          <path d="M50 24L70 50L50 76L30 50L50 24Z"
-            stroke="#E5D1A1" stroke-width="3"/>
-          <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
-            stroke="url(#registerGold)" stroke-width="3"
-            stroke-linecap="round"/>
-          <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
-        </svg>
-
-        <div class="eyebrow">JOIN CODVEST</div>
-        <h1>Create Your <span>Account</span></h1>
-        <p>Start your CodVest account registration.</p>
-
-      </div>
-
-      <form class="register-form" id="registerForm">
-
-        <div class="register-grid">
-
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              placeholder="Your full name"
-              autocomplete="name"
-              required
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Your phone number"
-              autocomplete="tel"
-              required
-            >
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email address"
-            autocomplete="email"
-            required
-          >
-        </div>
-
-        <!-- COUNTRY OF RESIDENCE -->
-
-        <div class="form-group">
-
-          <label for="country">Country of Residence</label>
-
-          <div class="country-wrapper">
-            <input
-              type="text"
-              id="country"
-              name="country"
-              list="countryList"
-              placeholder="Search or select your country"
-              autocomplete="country-name"
-              required
-            >
-
-            <datalist id="countryList"></datalist>
-          </div>
-
-          <small class="country-hint">
-            Type to search and select your country from the suggestions.
-          </small>
-
-        </div>
-
-        <div class="form-group">
-          <label for="password">Create Password</label>
-
-          <div class="password-wrapper">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Create a strong password"
-              autocomplete="new-password"
-              minlength="8"
-              required
-            >
-
-            <button
-              type="button"
-              class="show-password"
-              data-target="password"
-            >
-              Show
-            </button>
-          </div>
-
-          <div class="password-strength">
-            <div class="strength-bar" id="strengthBar"></div>
-          </div>
-
-          <span class="strength-text" id="strengthText">
-            Password strength
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-
-          <div class="password-wrapper">
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Enter your password again"
-              autocomplete="new-password"
-              required
-            >
-
-            <button
-              type="button"
-              class="show-password"
-              data-target="confirmPassword"
-            >
-              Show
-            </button>
-          </div>
-        </div>
-
-        <label class="terms">
-          <input type="checkbox" id="agreeTerms" required>
-          <span>
-            I agree to the CodVest
-            <a href="terms.html">Terms and Conditions</a>
-            and
-            <a href="privacy.html">Privacy Policy</a>.
-          </span>
-        </label>
-
-        <button type="submit" class="register-submit">
-          Create Account
-        </button>
-
-        <div class="register-message" id="registerMessage" role="status"></div>
-
-      </form>
-
-      <div class="login-link">
-        Already have an account?
-        <a href="login.html">Login</a>
-      </div>
-
-      <div class="register-security">
-        <span>◆</span> Account verification and secure registration
-        will be enabled when the backend is connected.
-        <br>
-        CODLONT Company
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer class="register-footer">
-    © 2026 CodVest. A CODLONT company. All rights reserved.
-  </footer>
-
-  <script>
-    // INTERNATIONAL COUNTRY LIST
-
-    const countryCodes = `
-      AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ
-      BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ
-      CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ
-      DE DJ DK DM DO DZ
-      EC EE EG EH ER ES ET
-      FI FJ FK FM FO FR
-      GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY
-      HK HM HN HR HT HU
-      ID IE IL IM IN IO IQ IR IS IT
-      JE JM JO JP
-      KE KG KH KI KM KN KP KR KW KY KZ
-      LA LB LC LI LK LR LS LT LU LV LY
-      MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ
-      NA NC NE NF NG NI NL NO NP NR NU NZ
-      OM
-      PA PE PF PG PH PK PL PM PN PR PS PT PW PY
-      QA
-      RE RO RS RU RW
-      SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ
-      TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ
-      UA UG UM US UY UZ
-      VA VC VE VG VI VN VU
-      WF WS
-      YE YT
-      ZA ZM ZW
-    `;
-
-    const countryNames = new Intl.DisplayNames(
-      ["en"],
-      { type: "region" }
-    );
-
-    const countries = countryCodes
-      .trim()
-      .split(/\s+/)
-      .map(code => ({
-        code,
-        name: countryNames.of(code)
-      }))
-      .filter(country =>
-        country.name && country.name !== country.code
-      )
-      .sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-
-    const countryInput = document.getElementById("country");
-    const countryList = document.getElementById("countryList");
-
-    countries.forEach(country => {
-      const option = document.createElement("option");
-      option.value = country.name;
-      countryList.appendChild(option);
-    });
-
-    function isValidCountry(value) {
-      return countries.some(
-        country => country.name === value.trim()
-      );
-    }
-
-    countryInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    countryInput.addEventListener("change", function () {
-      this.setCustomValidity(
-        isValidCountry(this.value)
-          ? ""
-          : "Please select a valid country from the suggestions."
-      );
-    });
-
-
-    // SHOW AND HIDE PASSWORDS
-
-    document.querySelectorAll(".show-password").forEach(button => {
-      button.addEventListener("click", function () {
-        const input = document.getElementById(this.dataset.target);
-        const showing = input.type === "text";
-
-        input.type = showing ? "password" : "text";
-        this.textContent = showing ? "Show" : "Hide";
-      });
-    });
-
-
-    // PASSWORD STRENGTH INDICATOR
-
-    const password = document.getElementById("password");
-    const strengthBar = document.getElementById("strengthBar");
-    const strengthText = document.getElementById("strengthText");
-
-    password.addEventListener("input", function () {
-      const value = password.value;
-      let score = 0;
-
-      if (value.length >= 8) score++;
-      if (/[A-Z]/.test(value)) score++;
-      if (/[0-9]/.test(value)) score++;
-      if (/[^A-Za-z0-9]/.test(value)) score++;
-
-      const levels = [
-        { width: "0%", text: "Password strength" },
-        { width: "25%", text: "Weak password" },
-        { width: "50%", text: "Fair password" },
-        { width: "75%", text: "Good password" },
-        { width: "100%", text: "Strong password" }
-      ];
-
-      strengthBar.style.width = levels[score].width;
-      strengthText.textContent = levels[score].text;
-    });
-
-
-    // REGISTRATION FORM DEMONSTRATION
-
-    document.getElementById("registerForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const passwordValue = password.value;
-      const confirmValue = document.getElementById("confirmPassword").value;
-      const message = document.getElementById("registerMessage");
-
-      message.style.display = "block";
-
-      if (!isValidCountry(countryInput.value)) {
-        countryInput.setCustomValidity(
-          "Please select a valid country from the suggestions."
-        );
-        countryInput.reportValidity();
-        message.textContent = "Please select a valid country.";
-        return;
-      }
-
-      if (passwordValue !== confirmValue) {
-        message.textContent =
-          "Your passwords do not match. Please check and try again.";
-        return;
-      }
-
-      message.textContent =
-        "Your details have been validated in this demo. Secure registration is not connected yet. No account has been created.";
-    });
-  </script>
+<header class="register-header">
+<a href="index.html" class="brand">
+<svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CodVest logo">
+<defs><linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90"><stop stop-color="#F4DFAD"/><stop offset="1" stop-color="#A47B35"/></linearGradient></defs>
+<path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#goldGradient)" stroke-width="5"/>
+<path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3"/>
+<path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+<circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+</svg>
+Cod<span>Vest</span>
+</a>
+</header>
+
+<main class="register-main">
+<section class="register-card">
+
+<div class="register-heading">
+<svg class="register-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="registerGold" x1="10" y1="10" x2="90" y2="90"><stop stop-color="#F4DFAD"/><stop offset="1" stop-color="#A47B35"/></linearGradient></defs>
+<path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#registerGold)" stroke-width="5"/>
+<path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3"/>
+<path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#registerGold)" stroke-width="3" stroke-linecap="round"/>
+<circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+</svg>
+<div class="eyebrow">JOIN CODVEST</div>
+<h1>Create Your <span>Account</span></h1>
+<p>Start your CodVest account registration.</p>
+</div>
+
+<form class="register-form" id="registerForm">
+
+<div class="register-grid">
+<div class="form-group">
+<label for="fullName">Full Name</label>
+<input type="text" id="fullName" name="fullName" placeholder="Your full name" autocomplete="name" required>
+</div>
+<div class="form-group">
+<label for="phone">Phone Number</label>
+<input type="tel" id="phone" name="phone" placeholder="Your phone number" autocomplete="tel" required>
+</div>
+</div>
+
+<div class="form-group">
+<label for="email">Email Address</label>
+<input type="email" id="email" name="email" placeholder="Enter your email address" autocomplete="email" required>
+</div>
+
+<div class="form-group">
+<label for="country">Country of Residence</label>
+<input type="text" id="country" name="country" list="countryList" placeholder="Search or select your country" autocomplete="country-name" required>
+<datalist id="countryList"></datalist>
+<small class="country-hint">Type to search and select your country.</small>
+</div>
+
+<div class="form-group">
+<label for="password">Create Password</label>
+<div class="password-wrapper">
+<input type="password" id="password" name="password" placeholder="Create a strong password" autocomplete="new-password" minlength="8" required>
+<button type="button" class="show-password" data-target="password">Show</button>
+</div>
+<div class="password-strength"><div class="strength-bar" id="strengthBar"></div></div>
+<span class="strength-text" id="strengthText">Password strength</span>
+</div>
+
+<div class="form-group">
+<label for="confirmPassword">Confirm Password</label>
+<div class="password-wrapper">
+<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter your password again" autocomplete="new-password" required>
+<button type="button" class="show-password" data-target="confirmPassword">Show</button>
+</div>
+</div>
+
+<!-- REQUIRED TERMS AGREEMENT -->
+<label class="terms">
+<input type="checkbox" id="agreeTerms" required>
+<span>
+I have read and agree to the
+<a href="#" id="openTerms">Terms and Conditions</a>
+and <a href="privacy.html">Privacy Policy</a>.
+</span>
+</label>
+
+<!-- REQUIRED AGE CONFIRMATION -->
+<label class="age-confirm">
+<input type="checkbox" id="ageConfirm" required>
+<span>I confirm that I am at least 18 years old and legally eligible to use this service in my country of residence.</span>
+</label>
+
+<button type="submit" class="register-submit">Create Account</button>
+<div class="register-message" id="registerMessage" role="status"></div>
+
+</form>
+
+<div class="login-link">
+Already have an account? <a href="login.html">Login</a>
+</div>
+
+<div class="register-security">
+<span>◆</span> Account verification and secure registration will be enabled when the backend is connected.
+<br>CODLONT Company
+</div>
+
+</section>
+</main>
+
+<footer class="register-footer">
+© 2026 CodVest. A CODLONT company. All rights reserved.
+</footer>
+
+<!-- TERMS AND CONDITIONS POPUP -->
+
+<div class="modal-overlay" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+<section class="terms-modal">
+
+<div class="modal-header">
+<h2 id="termsTitle">CodVest Terms and Conditions</h2>
+<button type="button" class="modal-close" id="closeTerms" aria-label="Close terms">&times;</button>
+</div>
+
+<div class="modal-content" id="termsContent">
+
+<p><strong>Effective date:</strong> 1 November 2026</p>
+
+<p>Welcome to CodVest, a proposed cryptocurrency investment platform developed by CODLONT. These Terms and Conditions explain the rules and conditions that apply when accessing or using the CodVest website and services.</p>
+
+<h3>1. Acceptance of These Terms</h3>
+<p>By creating an account, accessing or using CodVest, you acknowledge that you have read and understood these Terms and agree to be bound by them. If you do not agree, you must not register or use the service.</p>
+
+<h3>2. Age and Eligibility</h3>
+<p>You must be at least 18 years old and legally permitted to use the service in your country of residence. You must provide accurate information and complete any identity or eligibility checks required before access to investment services is approved.</p>
+
+<h3>3. Account Information and Security</h3>
+<p>You are responsible for providing accurate, current and complete registration information. You must keep your login details confidential and notify CodVest of suspected unauthorised access. You must not create an account using another person's identity or provide misleading information.</p>
+
+<h3>4. Cryptocurrency Investment Risks</h3>
+<p>Cryptocurrency is a high-risk asset class. Prices can change rapidly, markets may be volatile, and you may lose some or all of the money you invest. Digital assets may also be affected by technology failures, cyberattacks, liquidity problems, regulatory changes and other risks.</p>
+<p>Past performance does not guarantee future results. No profit, return or protection of your original capital is guaranteed unless expressly provided under a lawful, applicable written agreement.</p>
+
+<h3>5. Investment Plans and Deposits</h3>
+<p>Any investment plans displayed on the website are descriptions of proposed service categories unless and until they are formally launched and made available under approved terms. Minimum deposits, fees, withdrawal conditions, investment strategies and other material terms must be disclosed before you commit funds.</p>
+<p>Do not send cryptocurrency or money to an address or account unless it has been officially verified through an authorised CodVest channel and the relevant service has been legally approved and activated.</p>
+
+<h3>6. Identity Verification</h3>
+<p>CodVest may require identity, address, age and source-of-funds verification to comply with applicable legal and regulatory requirements. Registration does not automatically mean your account or investment application has been approved.</p>
+
+<h3>7. Fees, Withdrawals and Transactions</h3>
+<p>Applicable fees, transaction charges, withdrawal limits and processing conditions will be communicated before a transaction or investment is accepted. Blockchain transactions may be irreversible. You are responsible for checking wallet addresses and transaction details before confirming a transfer.</p>
+
+<h3>8. Prohibited Activities</h3>
+<p>You must not use CodVest for fraud, money laundering, terrorist financing, sanctions evasion, unlawful transactions, impersonation, hacking or any other prohibited activity. We may restrict or suspend access where legally justified or where suspicious activity is identified.</p>
+
+<h3>9. Privacy and Personal Information</h3>
+<p>Personal information collected during registration and account use must be handled in accordance with the CodVest Privacy Policy and applicable data protection laws. Please read the Privacy Policy to understand how information is collected, used and protected.</p>
+
+<h3>10. Availability and Changes</h3>
+<p>Website features may be changed, suspended or discontinued. We may update these Terms when necessary. Material changes should be communicated through appropriate channels. Continued use after an effective update constitutes acceptance where permitted by law.</p>
+
+<h3>11. Limitation of Liability</h3>
+<p>To the extent permitted by applicable law, CODLONT and CodVest are not responsible for losses arising from market movements, blockchain network failures, third-party services, unauthorised access caused by your failure to protect your credentials, or events outside reasonable control. Nothing in these Terms excludes liability that cannot legally be excluded.</p>
+
+<h3>12. Regulatory and Legal Compliance</h3>
+<p>Services will only be offered where the required regulatory approvals, licences, registrations or lawful operating arrangements are in place. Nothing on this website should be interpreted as a claim that CodVest or CODLONT holds a particular financial licence or regulatory approval unless that status is expressly confirmed and verifiable.</p>
+
+<h3>13. Contact and Complaints</h3>
+<p>Questions or complaints about these Terms may be submitted through the official contact channels published on the CodVest website.</p>
+
+<h3>14. Governing Law</h3>
+<p>These Terms are subject to the laws and regulations applicable to the services and the jurisdictions in which they are lawfully offered. Any specific governing-law and dispute-resolution provisions will be stated in the final legally reviewed version of these Terms.</p>
+
+<h3>15. Your Acknowledgement</h3>
+<p>By selecting “I Agree”, you confirm that you have had the opportunity to read these Terms, understand the cryptocurrency risks described above and agree to the conditions applicable to your use of CodVest.</p>
+
+<p><strong>Important:</strong> This is a draft website agreement and must be reviewed by a qualified lawyer familiar with Nigerian financial services, cryptocurrency and data protection requirements before CodVest accepts customers or funds.</p>
+
+<div class="read-note" id="readNote">Please scroll to the bottom of the agreement to enable the I Agree button.</div>
+
+</div>
+
+<div class="modal-footer">
+<button type="button" class="modal-button modal-decline" id="declineTerms">Close</button>
+<button type="button" class="modal-button modal-agree" id="acceptTerms" disabled>I Agree</button>
+</div>
+
+</section>
+</div>
+
+<script>
+// COUNTRY LIST
+const countryCodes = `
+AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ
+BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ
+CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ
+DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR
+GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY
+HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP
+KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY
+MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ
+NA NC NE NF NG NI NL NO NP NR NU NZ OM
+PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA
+RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ
+TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ
+VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW
+`;
+
+const countryNames = new Intl.DisplayNames(["en"], {type:"region"});
+const countries = countryCodes.trim().split(/\s+/)
+  .map(code => countryNames.of(code))
+  .filter(name => name && name.length > 2)
+  .filter((name,index,array) => array.indexOf(name) === index)
+  .sort((a,b) => a.localeCompare(b));
+
+const countryInput = document.getElementById("country");
+const countryList = document.getElementById("countryList");
+
+countries.forEach(name => {
+  const option = document.createElement("option");
+  option.value = name;
+  countryList.appendChild(option);
+});
+
+function validCountry(value) {
+  return countries.includes(value.trim());
+}
+
+// PASSWORD SHOW / HIDE
+document.querySelectorAll(".show-password").forEach(button => {
+  button.addEventListener("click", function() {
+    const input = document.getElementById(this.dataset.target);
+    const showing = input.type === "text";
+    input.type = showing ? "password" : "text";
+    this.textContent = showing ? "Show" : "Hide";
+  });
+});
+
+// PASSWORD STRENGTH
+const password = document.getElementById("password");
+const strengthBar = document.getElementById("strengthBar");
+const strengthText = document.getElementById("strengthText");
+
+password.addEventListener("input", function() {
+  const value = password.value;
+  let score = 0;
+  if (value.length >= 8) score++;
+  if (/[A-Z]/.test(value)) score++;
+  if (/[0-9]/.test(value)) score++;
+  if (/[^A-Za-z0-9]/.test(value)) score++;
+
+  const levels = [
+    ["0%","Password strength"],
+    ["25%","Weak password"],
+    ["50%","Fair password"],
+    ["75%","Good password"],
+    ["100%","Strong password"]
+  ];
+  strengthBar.style.width = levels[score][0];
+  strengthText.textContent = levels[score][1];
+});
+
+// TERMS MODAL
+const modal = document.getElementById("termsModal");
+const termsLink = document.getElementById("openTerms");
+const acceptButton = document.getElementById("acceptTerms");
+const termsContent = document.getElementById("termsContent");
+const agreeCheckbox = document.getElementById("agreeTerms");
+let termsAccepted = false;
+
+function openModal() {
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+  acceptButton.disabled = true;
+  termsContent.scrollTop = 0;
+}
+
+function closeModal() {
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+termsLink.addEventListener("click", function(event) {
+  event.preventDefault();
+  openModal();
+});
+
+document.getElementById("closeTerms").addEventListener("click", closeModal);
+document.getElementById("declineTerms").addEventListener("click", closeModal);
+
+// Require scrolling to the bottom before enabling agreement.
+termsContent.addEventListener("scroll", function() {
+  const atBottom =
+    termsContent.scrollTop + termsContent.clientHeight >=
+    termsContent.scrollHeight - 10;
+
+  if (atBottom) {
+    acceptButton.disabled = false;
+    document.getElementById("readNote").textContent =
+      "You have reached the end. You can now accept the agreement.";
+  }
+});
+
+acceptButton.addEventListener("click", function() {
+  termsAccepted = true;
+  agreeCheckbox.checked = true;
+  closeModal();
+});
+
+agreeCheckbox.addEventListener("change", function() {
+  if (!this.checked) termsAccepted = false;
+});
+
+// CLOSE MODAL WITH ESCAPE
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && modal.classList.contains("active")) {
+    closeModal();
+  }
+});
+
+// FORM VALIDATION
+document.getElementById("registerForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const message = document.getElementById("registerMessage");
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const ageConfirm = document.getElementById("ageConfirm");
+
+  message.style.display = "block";
+
+  if (!validCountry(countryInput.value)) {
+    message.textContent = "Please select a valid country of residence.";
+    countryInput.focus();
+    return;
+  }
+
+  if (password.value !== confirmPassword) {
+    message.textContent = "Your passwords do not match.";
+    return;
+  }
+
+  if (!termsAccepted || !agreeCheckbox.checked) {
+    message.textContent = "Please read and accept the Terms and Conditions.";
+    openModal();
+    return;
+  }
+
+  if (!ageConfirm.checked) {
+    message.textContent = "You must confirm that you are at least 18 years old.";
+    ageConfirm.focus();
+    return;
+  }
+
+  message.textContent =
+    "Your details have been validated in this demo. Secure registration is not connected yet. No account has been created.";
+});
+</script>
 
 </body>
 </html>
