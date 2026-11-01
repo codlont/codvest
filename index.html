@@ -1,0 +1,808 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1420">
+<title>CodVest | Digital Asset Investment</title>
+<meta name="description" content="CodVest is a cryptocurrency investment management platform by CODLONT.">
+<style>
+:root {
+  --bg: #0b1420;
+  --panel: #111f2e;
+  --green: #19c995;
+  --white: #f5f8fa;
+  --muted: #9aaaba;
+  --border: rgba(255,255,255,.09);
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+  font-family: Inter, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.6;
+}
+a {color:inherit;text-decoration:none}
+button {font:inherit;cursor:pointer}
+.container {width:min(1160px,90%);margin:auto}
+
+/* NAVIGATION */
+header {
+  height:78px;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  background:rgba(11,20,32,.95);
+  backdrop-filter:blur(15px);
+  z-index:100;
+}
+.nav {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+}
+.logo {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+.logo-icon {
+  width:39px;height:39px;
+  display:grid;place-items:center;
+  background:var(--green);
+  color:#071b16;
+  border-radius:11px;
+  font-size:23px;
+  font-weight:900;
+}
+.logo span {color:var(--green)}
+.nav-links {display:flex;align-items:center;gap:30px}
+.nav-links a {font-size:14px;color:#c4d0db}
+.nav-links a:hover {color:var(--green)}
+.nav-actions {display:flex;gap:12px;align-items:center}
+.btn {
+  padding:12px 21px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:650;
+  font-size:14px;
+  transition:.2s;
+}
+.btn-green {
+  background:var(--green);
+  color:#061a15;
+  border-color:var(--green);
+}
+.btn-green:hover {background:#35e0ad}
+.btn-outline:hover {border-color:var(--green);color:var(--green)}
+.menu-btn {
+  display:none;
+  background:none;
+  border:0;
+  color:white;
+  font-size:27px;
+}
+
+/* HERO */
+.hero {
+  padding:100px 0 90px;
+  overflow:hidden;
+  position:relative;
+}
+.hero-grid {
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;
+  gap:65px;
+}
+.eyebrow {
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:23px;
+}
+.hero h1 {
+  font-size:clamp(43px,6vw,70px);
+  line-height:1.08;
+  letter-spacing:-3px;
+  margin-bottom:24px;
+}
+.hero h1 span {color:var(--green)}
+.hero-description {
+  max-width:530px;
+  color:var(--muted);
+  font-size:17px;
+  margin-bottom:32px;
+}
+.hero-buttons {display:flex;gap:13px;flex-wrap:wrap}
+.hero-note {font-size:11px;color:var(--muted);margin-top:23px}
+.visual {
+  position:relative;
+  background:linear-gradient(145deg,#152c3b,#101b29);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:27px;
+  box-shadow:0 25px 80px rgba(0,0,0,.3);
+}
+.visual-top {display:flex;justify-content:space-between;align-items:center}
+.visual-label {font-size:12px;color:var(--muted)}
+.demo-tag {
+  font-size:10px;
+  color:var(--green);
+  border:1px solid rgba(25,201,149,.3);
+  padding:5px 9px;
+  border-radius:20px;
+}
+.visual h2 {font-size:32px;margin-top:22px}
+.visual-sub {color:var(--muted);font-size:12px}
+.chart {
+  width:100%;
+  height:170px;
+  margin:20px 0;
+}
+.chart svg {width:100%;height:100%;overflow:visible}
+.stats {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat {
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  padding:15px;
+  border-radius:10px;
+}
+.stat small {color:var(--muted);display:block;font-size:11px}
+.stat strong {font-size:17px}
+
+/* TRUST STRIP */
+.trust-strip {
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:25px 0;
+}
+.trust-items {
+  display:flex;
+  justify-content:space-around;
+  gap:20px;
+  flex-wrap:wrap;
+  color:#c1ccd6;
+  font-size:13px;
+}
+.trust-items span {display:flex;gap:9px;align-items:center}
+
+/* GENERAL SECTIONS */
+section {padding:90px 0}
+.section-heading {text-align:center;margin-bottom:48px}
+.section-heading h2 {
+  font-size:clamp(30px,4vw,43px);
+  letter-spacing:-1.5px;
+  margin-bottom:13px;
+}
+.section-heading p {
+  max-width:610px;
+  margin:auto;
+  color:var(--muted);
+  font-size:15px;
+}
+.green {color:var(--green)}
+
+/* ABOUT */
+.about-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:65px;
+  align-items:center;
+}
+.about-box {
+  background:linear-gradient(145deg,#142a37,#10202d);
+  padding:35px;
+  border-radius:18px;
+  border:1px solid var(--border);
+}
+.about-box h3 {font-size:26px;margin-bottom:15px}
+.about-box p {color:var(--muted);font-size:14px}
+.about-points {display:grid;gap:20px}
+.point {display:flex;gap:15px}
+.point-icon {
+  width:43px;height:43px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:rgba(25,201,149,.1);
+  border-radius:12px;
+  color:var(--green);
+  font-size:20px;
+}
+.point h3 {font-size:16px;margin-bottom:5px}
+.point p {color:var(--muted);font-size:13px}
+
+/* HOW IT WORKS */
+.steps {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.step {
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:28px;
+  border-radius:15px;
+}
+.step-number {
+  font-size:13px;
+  color:var(--green);
+  font-weight:800;
+}
+.step h3 {margin:17px 0 9px;font-size:18px}
+.step p {font-size:13px;color:var(--muted)}
+
+/* PLANS */
+.plans-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+.plan {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:25px;
+}
+.plan.featured {border-color:var(--green)}
+.plan-label {color:var(--green);font-size:12px;font-weight:800}
+.plan h3 {font-size:25px;margin:12px 0}
+.plan p {color:var(--muted);font-size:13px}
+.plan ul {list-style:none;margin:20px 0}
+.plan li {
+  color:#c2ced8;
+  font-size:13px;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+}
+.plan li::before {content:"✓";color:var(--green);margin-right:10px}
+.plan .btn {width:100%;margin-top:8px}
+
+/* SECURITY */
+.security {
+  background:#101e2c;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.security-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+.security-card {text-align:center;padding:20px}
+.security-icon {font-size:30px;margin-bottom:15px}
+.security-card h3 {font-size:17px;margin-bottom:9px}
+.security-card p {color:var(--muted);font-size:13px}
+
+/* FAQ */
+.faq {max-width:760px;margin:auto}
+details {
+  border-bottom:1px solid var(--border);
+  padding:20px 0;
+}
+summary {cursor:pointer;font-weight:650;font-size:15px}
+details p {color:var(--muted);font-size:13px;padding-top:13px}
+
+/* FOOTER */
+footer {padding:55px 0 25px}
+.footer-grid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:40px;
+  padding-bottom:35px;
+}
+.footer-about p {color:var(--muted);font-size:13px;max-width:340px;margin-top:15px}
+.footer-column h4 {margin-bottom:15px}
+.footer-column a {
+  display:block;color:var(--muted);
+  font-size:13px;margin:10px 0;
+}
+.footer-column a:hover {color:var(--green)}
+.footer-bottom {
+  border-top:1px solid var(--border);
+  padding-top:22px;
+  color:var(--muted);
+  font-size:11px;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:15px;
+}
+.disclaimer {
+  color:#8f9eae;
+  font-size:11px;
+  line-height:1.8;
+  margin-top:25px;
+  border-top:1px solid var(--border);
+  padding-top:20px;
+}
+
+/* MOBILE */
+@media(max-width:850px) {
+  .nav-links {
+    display:none;
+    position:absolute;
+    top:78px;left:0;width:100%;
+    background:#101e2c;
+    padding:25px 5%;
+    flex-direction:column;
+    align-items:flex-start;
+    border-bottom:1px solid var(--border);
+  }
+  .nav-links.open {display:flex}
+  .menu-btn {display:block}
+  .nav-actions .btn-outline {display:none}
+  .hero {padding:70px 0}
+  .hero-grid,.about-grid {grid-template-columns:1fr;gap:40px}
+  .steps {grid-template-columns:1fr}
+  .plans-grid {grid-template-columns:1fr 1fr}
+  .security-grid {grid-template-columns:1fr}
+}
+@media(max-width:550px) {
+  .hero h1 {letter-spacing:-2px}
+  .plans-grid {grid-template-columns:1fr}
+  .footer-grid {grid-template-columns:1fr 1fr}
+  .footer-about {grid-column:1/-1}
+  .visual {padding:19px}
+  section {padding:65px 0}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <div class="logo-icon">C</div>
+      Cod<span>Vest</span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#how">How it works</a>
+      <a href="#plans">Investment levels</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#faq" class="btn btn-outline">Learn more</a>
+      <a href="#plans" class="btn btn-green">Explore plans</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+
+    <div>
+      <div class="eyebrow">DIGITAL ASSET INVESTMENT MANAGEMENT</div>
+
+      <h1>
+        A smarter way to approach
+        <span>crypto investing.</span>
+      </h1>
+
+      <p class="hero-description">
+        Discover a modern approach to cryptocurrency investment
+        management. Monitor your portfolio, understand your
+        performance and stay informed about your investments
+        with CodVest.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#plans" class="btn btn-green">Explore investment levels →</a>
+        <a href="#about" class="btn btn-outline">Discover CodVest</a>
+      </div>
+
+      <p class="hero-note">
+        Cryptocurrency investments involve risk. Returns are not guaranteed.
+      </p>
+    </div>
+
+    <!-- DEMONSTRATION DASHBOARD -->
+    <div class="visual">
+      <div class="visual-top">
+        <span class="visual-label">PORTFOLIO PREVIEW</span>
+        <span class="demo-tag">DEMO DATA</span>
+      </div>
+
+      <h2>Crypto portfolio</h2>
+      <p class="visual-sub">Illustrative portfolio performance</p>
+
+      <div class="chart">
+        <svg viewBox="0 0 500 170" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#19c995" stop-opacity=".3"/>
+              <stop offset="100%" stop-color="#19c995" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 130 L45 112 L85 120 L130 78 L175 95 L220 55 L260 70 L305 40 L350 58 L400 20 L450 36 L500 8 L500 170 L0 170 Z"
+          fill="url(#area)"/>
+          <path d="M0 130 L45 112 L85 120 L130 78 L175 95 L220 55 L260 70 L305 40 L350 58 L400 20 L450 36 L500 8"
+          fill="none" stroke="#19c995" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <small>Portfolio value</small>
+          <strong>Demo balance</strong>
+        </div>
+        <div class="stat">
+          <small>Performance</small>
+          <strong>Demo data</strong>
+        </div>
+        <div class="stat">
+          <small>Investment assets</small>
+          <strong>Crypto</strong>
+        </div>
+        <div class="stat">
+          <small>Account status</small>
+          <strong>Preview</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="container trust-items">
+    <span>◇ Transparent reporting</span>
+    <span>◈ Individual accounts</span>
+    <span>⌁ Digital asset management</span>
+    <span>◎ Security focused</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container about-grid">
+
+    <div class="about-box">
+      <div class="eyebrow">ABOUT CODVEST</div>
+      <h3>Technology meets modern investment management.</h3>
+      <p>
+        CodVest is a proposed digital asset investment management
+        platform developed by CODLONT. Our vision is to make
+        investment information, portfolio monitoring and
+        professional digital asset management accessible
+        through one modern experience.
+      </p>
+    </div>
+
+    <div class="about-points">
+      <div class="point">
+        <div class="point-icon">◈</div>
+        <div>
+          <h3>Individual investment accounts</h3>
+          <p>Each customer will have a dedicated investment record
+          and a transparent view of their portfolio.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">⌁</div>
+        <div>
+          <h3>Portfolio monitoring</h3>
+          <p>Follow your investment performance and transaction
+          history in one place.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">◎</div>
+        <div>
+          <h3>Security and accountability</h3>
+          <p>Our intended platform design prioritizes secure
+          accounts, clear records and responsible reporting.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:#101e2c">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">THE PROCESS</div>
+      <h2>How <span class="green">CodVest</span> works</h2>
+      <p>
+        A straightforward investment management experience
+        designed around transparency and informed decisions.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">STEP 01</div>
+        <h3>Create your account</h3>
+        <p>Register and complete the required identity
+        verification process.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">STEP 02</div>
+        <h3>Explore investment options</h3>
+        <p>Review available investment strategies, risk levels,
+        terms and fees before making a decision.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">STEP 03</div>
+        <h3>Monitor your portfolio</h3>
+        <p>View investment activity, performance, profits
+        or losses and eligible withdrawal information.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT LEVELS -->
+<section id="plans">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">INVESTMENT OPTIONS</div>
+      <h2>Find your investment level</h2>
+      <p>
+        CodVest is planning multiple investment account
+        categories with different entry requirements and
+        risk profiles.
+      </p>
+    </div>
+
+    <div class="plans-grid">
+
+      <div class="plan">
+        <div class="plan-label">LEVEL 01</div>
+        <h3>Starter</h3>
+        <p>Designed for people beginning their investment journey.</p>
+        <ul>
+          <li>Entry-level investment category</li>
+          <li>Individual portfolio record</li>
+          <li>Performance reporting</li>
+          <li>Risk information</li>
+        </ul>
+        <a href="#faq" class="btn btn-outline">Coming soon</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-label">LEVEL 02</div>
+        <h3>Silver</h3>
+        <p>A category intended for growing investment portfolios.</p>
+        <ul>
+          <li>Silver investment category</li>
+          <li>Individual portfolio record</li>
+          <li>Performance reporting</li>
+          <li>Risk information</li>
+        </ul>
+        <a href="#faq" class="btn btn-outline">Coming soon</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-label">LEVEL 03</div>
+        <h3>Gold</h3>
+        <p>A planned category for intermediate investors.</p>
+        <ul>
+          <li>Gold investment category</li>
+          <li>Individual portfolio record</li>
+          <li>Performance reporting</li>
+          <li>Risk information</li>
+        </ul>
+        <a href="#faq" class="btn btn-green">Coming soon</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-label">LEVEL 04</div>
+        <h3>Platinum</h3>
+        <p>A planned category for larger investment portfolios.</p>
+        <ul>
+          <li>Platinum investment category</li>
+          <li>Individual portfolio record</li>
+          <li>Performance reporting</li>
+          <li>Risk information</li>
+        </ul>
+        <a href="#faq" class="btn btn-outline">Coming soon</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-label">LEVEL 05</div>
+        <h3>Diamond</h3>
+        <p>A planned premium investment category.</p>
+        <ul>
+          <li>Diamond investment category</li>
+          <li>Individual portfolio record</li>
+          <li>Performance reporting</li>
+          <li>Risk information</li>
+        </ul>
+        <a href="#faq" class="btn btn-outline">Coming soon</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security" id="security">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">OUR PRINCIPLES</div>
+      <h2>Built around transparency</h2>
+      <p>
+        Financial technology requires responsibility.
+        Our platform is being designed with these principles
+        at its foundation.
+      </p>
+    </div>
+
+    <div class="security-grid">
+      <div class="security-card">
+        <div class="security-icon">🔐</div>
+        <h3>Account security</h3>
+        <p>Secure authentication and protection of customer accounts.</p>
+      </div>
+
+      <div class="security-card">
+        <div class="security-icon">📊</div>
+        <h3>Transparent reporting</h3>
+        <p>Clear records of portfolio activity, fees, profits and losses.</p>
+      </div>
+
+      <div class="security-card">
+        <div class="security-icon">⚖️</div>
+        <h3>Responsible management</h3>
+        <p>Risk disclosure, appropriate oversight and regulatory compliance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">QUESTIONS</div>
+      <h2>Frequently asked questions</h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>What is CodVest?</summary>
+        <p>CodVest is a proposed cryptocurrency investment
+        management platform being developed by CODLONT.</p>
+      </details>
+
+      <details>
+        <summary>How does managed investing work?</summary>
+        <p>Under a managed account arrangement, an appropriately
+        authorised investment manager manages the agreed portfolio
+        within the customer's mandate.</p>
+      </details>
+
+      <details>
+        <summary>Are investment returns guaranteed?</summary>
+        <p>No. Cryptocurrency markets are volatile. Investments
+        can lose value, and customers may lose some or all of
+        their invested capital.</p>
+      </details>
+
+      <details>
+        <summary>Can I withdraw my investment?</summary>
+        <p>Withdrawal rights, processing periods and any applicable
+        restrictions will be clearly disclosed in the final
+        investment agreement.</p>
+      </details>
+
+      <details>
+        <summary>When will CodVest launch?</summary>
+        <p>The platform is currently in development. Live
+        investment services will only be offered after the
+        necessary regulatory and operational arrangements
+        are established.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="#" class="logo">
+          <div class="logo-icon">C</div>
+          Cod<span>Vest</span>
+        </a>
+        <p>
+          A modern cryptocurrency investment management
+          platform envisioned and developed by CODLONT.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Platform</h4>
+        <a href="#about">About us</a>
+        <a href="#how">How it works</a>
+        <a href="#plans">Investment levels</a>
+        <a href="#security">Security</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Information</h4>
+        <a href="#faq">FAQs</a>
+        <a href="#security">Risk disclosure</a>
+        <a href="#faq">Contact information</a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Investment risk disclosure:</strong>
+      Cryptocurrency investments are highly volatile and
+      involve significant risk. The value of digital assets
+      can rise or fall, and investors may lose their entire
+      investment. No returns are guaranteed. This website is
+      currently a development preview and does not accept
+      deposits or offer live investment services.
+
+      <br><br>
+      CodVest is a proposed brand of CODLONT. No representation
+      of regulatory authorisation or licensing is made by this
+      development website.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> CodVest. All rights reserved.</span>
+      <span>AN INVESTMENT PLATFORM BY CODLONT</span>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("open");
+  menuBtn.textContent =
+    navLinks.classList.contains("open") ? "✕" : "☰";
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuBtn.textContent = "☰";
+  });
+});
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
+
+</body>
+</html>
