@@ -520,3 +520,32 @@ footer {
     flex-direction: column;
   }
 }
+
+/* UNIVERSAL CODVEST LOGO SPACING FIX */
+
+.brand,
+.logo,
+.site-logo,
+.nav-logo,
+header .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 !important;
+}
+
+.brand span,
+.logo span,
+.site-logo span,
+.nav-logo span,
+header .logo span {
+  margin-left: -5px !important;
+  padding-left: 0 !important;
+}
+
+/* Keep the logo symbol separate from the wordmark */
+.brand-symbol,
+.logo-symbol,
+.site-logo svg,
+.nav-logo svg {
+  margin-right: 9px;
+}
