@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Create Account | CodVest</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(201,164,92,.09), transparent 42%),
+        #08090b;
+    }
+
+    .register-header {
+      padding: 20px 5%;
+      border-bottom: 1px solid rgba(201,164,92,.18);
+    }
+
+    .register-header .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .register-header .brand span {
+      margin-left: -5px;
+    }
+
+    .register-main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 55px 20px;
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 540px;
+      padding: 40px;
+      background: linear-gradient(145deg, #15171c, #0e1014);
+      border: 1px solid rgba(201,164,92,.2);
+      border-radius: 12px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+
+    .register-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .register-heading h1 {
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .register-heading h1 span {
+      color: var(--gold-light);
+    }
+
+    .register-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .register-logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 15px;
+    }
+
+    .register-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 15px;
+    }
+
+    .register-form .form-group {
+      margin-bottom: 18px;
+    }
+
+    .register-form input,
+    .register-form select {
+      background: #090b0e;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 70px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--gold-light);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .password-strength {
+      height: 4px;
+      margin-top: 9px;
+      background: #292c32;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .strength-bar {
+      width: 0;
+      height: 100%;
+      background: var(--gold);
+      transition: .3s ease;
+    }
+
+    .strength-text {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 8px 0 23px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .terms input {
+      width: auto;
+      margin-top: 4px;
+      accent-color: var(--gold);
+    }
+
+    .terms a {
+      color: var(--gold-light);
+    }
+
+    .register-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(110deg, #b38c48, #f0dba8);
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .3s ease;
+    }
+
+    .register-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 22px rgba(201,164,92,.18);
+    }
+
+    .register-message {
+      display: none;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid rgba(201,164,92,.25);
+      border-radius: 6px;
+      color: var(--gold-light);
+      background: rgba(201,164,92,.06);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .login-link {
+      margin-top: 25px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .login-link a {
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .register-security {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(201,164,92,.15);
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .register-security span {
+      color: var(--gold-light);
+    }
+
+    .register-footer {
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid rgba(201,164,92,.15);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 600px) {
+      .register-card {
+        padding: 28px 22px;
+      }
+
+      .register-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .register-heading h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="register-header">
+    <a href="index.html" class="brand">
+
+      <svg class="brand-symbol" viewBox="0 0 100 100"
+        fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-label="CodVest logo">
+        <defs>
+          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z"
+          stroke="url(#goldGradient)" stroke-width="5"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z"
+          stroke="#E5D1A1" stroke-width="3"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
+          stroke="url(#goldGradient)" stroke-width="3"
+          stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+
+      Cod<span>Vest</span>
+    </a>
+  </header>
+
+  <main class="register-main">
+
+    <section class="register-card">
+
+      <div class="register-heading">
+
+        <svg class="register-logo" viewBox="0 0 100 100"
+          fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="registerGold" x1="10" y1="10" x2="90" y2="90">
+              <stop stop-color="#F4DFAD"/>
+              <stop offset="1" stop-color="#A47B35"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 7L85 50L50 93L15 50L50 7Z"
+            stroke="url(#registerGold)" stroke-width="5"/>
+          <path d="M50 24L70 50L50 76L30 50L50 24Z"
+            stroke="#E5D1A1" stroke-width="3"/>
+          <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
+            stroke="url(#registerGold)" stroke-width="3"
+            stroke-linecap="round"/>
+          <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+        </svg>
+
+        <div class="eyebrow">JOIN CODVEST</div>
+        <h1>Create Your <span>Account</span></h1>
+        <p>Start your CodVest account registration.</p>
+
+      </div>
+
+      <form class="register-form" id="registerForm">
+
+        <div class="register-grid">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Your full name"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Your phone number"
+              autocomplete="tel"
+              required
+            >
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country of Residence</label>
+          <select id="country" required>
+            <option value="">Select your country</option>
+            <option value="Nigeria">Nigeria</option>
+            <option value="Ghana">Ghana</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Kenya">Kenya</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Create Password</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              data-target="password"
+            >
+              Show
+            </button>
+          </div>
+
+          <div class="password-strength">
+            <div class="strength-bar" id="strengthBar"></div>
+          </div>
+
+          <span class="strength-text" id="strengthText">
+            Password strength
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Enter your password again"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              data-target="confirmPassword"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <label class="terms">
+          <input type="checkbox" id="agreeTerms" required>
+          <span>
+            I agree to the CodVest
+            <a href="terms.html">Terms and Conditions</a>
+            and
+            <a href="privacy.html">Privacy Policy</a>.
+          </span>
+        </label>
+
+        <button type="submit" class="register-submit">
+          Create Account
+        </button>
+
+        <div class="register-message" id="registerMessage" role="status"></div>
+
+      </form>
+
+      <div class="login-link">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </div>
+
+      <div class="register-security">
+        <span>◆</span> Account verification and secure registration
+        will be enabled when the backend is connected.
+        <br>
+        CODLONT Company
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="register-footer">
+    © 2026 CodVest. A CODLONT company. All rights reserved.
+  </footer>
+
+  <script>
+    // Show and hide passwords
+    document.querySelectorAll(".show-password").forEach(button => {
+      button.addEventListener("click", function () {
+        const input = document.getElementById(this.dataset.target);
+        const showing = input.type === "text";
+
+        input.type = showing ? "password" : "text";
+        this.textContent = showing ? "Show" : "Hide";
+      });
+    });
+
+    // Password strength indicator
+    const password = document.getElementById("password");
+    const strengthBar = document.getElementById("strengthBar");
+    const strengthText = document.getElementById("strengthText");
+
+    password.addEventListener("input", function () {
+      const value = password.value;
+      let score = 0;
+
+      if (value.length >= 8) score++;
+      if (/[A-Z]/.test(value)) score++;
+      if (/[0-9]/.test(value)) score++;
+      if (/[^A-Za-z0-9]/.test(value)) score++;
+
+      const levels = [
+        { width: "0%", text: "Password strength" },
+        { width: "25%", text: "Weak password" },
+        { width: "50%", text: "Fair password" },
+        { width: "75%", text: "Good password" },
+        { width: "100%", text: "Strong password" }
+      ];
+
+      strengthBar.style.width = levels[score].width;
+      strengthText.textContent = levels[score].text;
+    });
+
+    // Registration form demonstration only
+    document.getElementById("registerForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const passwordValue = password.value;
+      const confirmValue = document.getElementById("confirmPassword").value;
+      const message = document.getElementById("registerMessage");
+
+      message.style.display = "block";
+
+      if (passwordValue !== confirmValue) {
+        message.textContent = "Your passwords do not match. Please check and try again.";
+        return;
+      }
+
+      message.textContent =
+        "Your details have been validated in this demo. Secure registration is not connected yet. No account has been created.";
+    });
+  </script>
+
+</body>
+</html>
