@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Login | CodVest</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(201,164,92,.09), transparent 40%),
+        #08090b;
+    }
+
+    .login-header {
+      padding: 20px 5%;
+      border-bottom: 1px solid rgba(201,164,92,.18);
+    }
+
+    .login-header .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .login-header .brand span {
+      margin-left: -5px;
+    }
+
+    .login-main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 55px 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      background: linear-gradient(145deg, #15171c, #0e1014);
+      border: 1px solid rgba(201,164,92,.2);
+      border-radius: 12px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+
+    .login-heading {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-heading h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .login-heading h1 span {
+      color: var(--gold-light);
+    }
+
+    .login-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .login-logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+    }
+
+    .login-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .login-form input {
+      background: #090b0e;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 75px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--gold-light);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 5px 0 25px;
+      font-size: 12px;
+    }
+
+    .remember-option {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+    }
+
+    .remember-option input {
+      width: auto;
+      accent-color: var(--gold);
+    }
+
+    .forgot-link {
+      color: var(--gold-light);
+    }
+
+    .login-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(110deg, #b38c48, #f0dba8);
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .3s ease;
+    }
+
+    .login-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 22px rgba(201,164,92,.18);
+    }
+
+    .login-message {
+      display: none;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid rgba(201,164,92,.25);
+      border-radius: 6px;
+      color: var(--gold-light);
+      background: rgba(201,164,92,.06);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .create-account {
+      margin-top: 25px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .create-account a {
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .login-security {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(201,164,92,.15);
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .login-security span {
+      color: var(--gold-light);
+    }
+
+    .login-footer {
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid rgba(201,164,92,.15);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 500px) {
+      .login-card {
+        padding: 28px 22px;
+      }
+
+      .login-heading h1 {
+        font-size: 26px;
+      }
+
+      .login-options {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="login-header">
+    <a href="index.html" class="brand">
+      <svg class="brand-symbol" viewBox="0 0 100 100"
+        fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-label="CodVest logo">
+        <defs>
+          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z"
+          stroke="url(#goldGradient)" stroke-width="5"
+          stroke-linejoin="round"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z"
+          stroke="#E5D1A1" stroke-width="3"
+          stroke-linejoin="round"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
+          stroke="url(#goldGradient)" stroke-width="3"
+          stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+      Cod<span>Vest</span>
+    </a>
+  </header>
+
+  <main class="login-main">
+
+    <section class="login-card">
+
+      <div class="login-heading">
+
+        <svg class="login-logo" viewBox="0 0 100 100"
+          fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="loginGold" x1="10" y1="10" x2="90" y2="90">
+              <stop stop-color="#F4DFAD"/>
+              <stop offset="1" stop-color="#A47B35"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 7L85 50L50 93L15 50L50 7Z"
+            stroke="url(#loginGold)" stroke-width="5"/>
+          <path d="M50 24L70 50L50 76L30 50L50 24Z"
+            stroke="#E5D1A1" stroke-width="3"/>
+          <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45"
+            stroke="url(#loginGold)" stroke-width="3"
+            stroke-linecap="round"/>
+          <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+        </svg>
+
+        <div class="eyebrow">WELCOME BACK</div>
+        <h1>Login to <span>CodVest</span></h1>
+        <p>Access your CodVest account.</p>
+
+      </div>
+
+      <form class="login-form" id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              id="togglePassword"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="login-options">
+
+          <label class="remember-option">
+            <input type="checkbox" id="remember">
+            Remember me
+          </label>
+
+          <a href="contact.html" class="forgot-link">
+            Forgot password?
+          </a>
+
+        </div>
+
+        <button type="submit" class="login-submit">
+          Login to Account
+        </button>
+
+        <div class="login-message" id="loginMessage" role="status">
+          Secure login is not connected yet. Please check back when
+          CodVest authentication is enabled.
+        </div>
+
+      </form>
+
+      <div class="create-account">
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+      </div>
+
+      <div class="login-security">
+        <span>◆</span> Your account security matters to CodVest.
+        <br>
+        CODLONT Company
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="login-footer">
+    © 2026 CodVest. A CODLONT company. All rights reserved.
+  </footer>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    togglePassword.addEventListener("click", function () {
+      const showing = passwordInput.type === "text";
+
+      passwordInput.type = showing ? "password" : "text";
+      togglePassword.textContent = showing ? "Show" : "Hide";
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      document.getElementById("loginMessage").style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
