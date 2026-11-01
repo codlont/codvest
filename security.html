@@ -1,0 +1,638 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Security | CodVest</title>
+  <meta name="description" content="Learn about CodVest's approach to account security, privacy and cryptocurrency investment risks.">
+
+  <style>
+    :root {
+      --bg: #08090b;
+      --panel: #111317;
+      --gold: #d8b66e;
+      --gold-light: #f1dba7;
+      --text: #f5f5f5;
+      --muted: #a2a6ae;
+      --border: rgba(255,255,255,.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,9,11,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .brand span { color: var(--gold); }
+    .brand-symbol { width: 43px; height: 43px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold-light); }
+
+    .nav-button {
+      border: 1px solid var(--gold);
+      padding: 10px 17px;
+      border-radius: 5px;
+      color: var(--gold-light) !important;
+    }
+
+    .menu-button {
+      display: none;
+      color: var(--gold);
+      font-size: 28px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 110px 0 85px;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(216,182,110,.14), transparent 60%);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(39px, 5.5vw, 65px);
+      line-height: 1.12;
+      margin: 20px 0;
+    }
+
+    h1 span { color: var(--gold-light); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 16px;
+    }
+
+    .security-visual {
+      min-height: 330px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .orbit {
+      width: 270px;
+      height: 270px;
+      border: 1px solid rgba(216,182,110,.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 70px rgba(216,182,110,.08);
+    }
+
+    .orbit::before,
+    .orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(216,182,110,.2);
+      border-radius: 50%;
+    }
+
+    .orbit::before { width: 210px; height: 210px; }
+    .orbit::after { width: 320px; height: 320px; }
+
+    .shield {
+      width: 115px;
+      height: 135px;
+      border: 2px solid var(--gold);
+      clip-path: polygon(50% 0, 94% 17%, 88% 67%, 50% 100%, 12% 67%, 6% 17%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(216,182,110,.08);
+      color: var(--gold-light);
+      font-size: 50px;
+    }
+
+    .section { padding: 80px 0; }
+
+    .section-heading {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 45px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(28px, 4vw, 41px);
+      margin: 12px 0;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .security-card {
+      background: linear-gradient(145deg, #171a20, #0d0f12);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      transition: .25s;
+    }
+
+    .security-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(216,182,110,.5);
+    }
+
+    .card-icon {
+      color: var(--gold);
+      font-size: 31px;
+      margin-bottom: 14px;
+    }
+
+    .security-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .security-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dark-section {
+      background: #101216;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .split h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.2;
+      margin: 13px 0 18px;
+    }
+
+    .split p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .check-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: #d6d8dd;
+      font-size: 14px;
+    }
+
+    .check-list li::before {
+      content: "✦";
+      color: var(--gold);
+      margin-right: 12px;
+    }
+
+    .privacy-panel {
+      padding: 35px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+
+    .privacy-panel h3 {
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .privacy-panel p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .warning {
+      border: 1px solid rgba(216,182,110,.35);
+      background: rgba(216,182,110,.05);
+      border-radius: 9px;
+      padding: 25px;
+      margin-top: 35px;
+    }
+
+    .warning h3 {
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .warning p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 85px 20px;
+      background: radial-gradient(ellipse at center, rgba(216,182,110,.12), transparent 65%);
+    }
+
+    .cta h2 {
+      font-size: clamp(29px, 4vw, 42px);
+      margin: 12px 0;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
+    .gold-button {
+      display: inline-block;
+      background: linear-gradient(120deg, #b38c48, #f0dba8);
+      color: #101010;
+      padding: 13px 25px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 82px;
+        left: 0;
+        width: 100%;
+        background: #0d0f12;
+        padding: 25px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.show { display: flex; }
+      .menu-button { display: block; }
+      .hero-content, .split { grid-template-columns: 1fr; }
+      .security-grid { grid-template-columns: repeat(2, 1fr); }
+      .security-visual { min-height: 280px; }
+    }
+
+    @media (max-width: 600px) {
+      .security-grid { grid-template-columns: 1fr; }
+      .hero { padding: 75px 0 55px; }
+      .section { padding: 55px 0; }
+      .brand { font-size: 24px; }
+      .brand-symbol { width: 39px; height: 39px; }
+      .orbit { transform: scale(.82); }
+      .footer-content { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CodVest logo">
+        <defs>
+          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#goldGradient)" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+      Cod<span>Vest</span>
+    </a>
+
+    <button class="menu-button" id="menuButton" aria-label="Open navigation menu">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="investment-plans.html">Investment Plans</a>
+      <a href="security.html" class="active">Security</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html" class="nav-button">Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <div class="eyebrow">Security & Privacy</div>
+        <h1>Security is part of <span>every decision.</span></h1>
+        <p>
+          Protecting accounts, personal information and investment-related
+          activities is an important part of the CodVest platform vision.
+          We aim to build with transparency, responsibility and security
+          awareness at the centre.
+        </p>
+      </div>
+
+      <div class="security-visual">
+        <div class="orbit">
+          <div class="shield">◇</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Our Security Approach</div>
+        <h2>Built around responsible protection</h2>
+        <p>
+          These are the security principles and controls intended for the
+          platform as it develops. Actual protections will depend on the
+          systems implemented and independently tested before launch.
+        </p>
+      </div>
+
+      <div class="security-grid">
+        <article class="security-card">
+          <div class="card-icon">◈</div>
+          <h3>Account Protection</h3>
+          <p>
+            The platform is intended to use secure authentication,
+            account-access controls and additional verification measures.
+          </p>
+        </article>
+
+        <article class="security-card">
+          <div class="card-icon">⌑</div>
+          <h3>Data Privacy</h3>
+          <p>
+            Personal information should be collected only for clearly
+            explained purposes and handled responsibly.
+          </p>
+        </article>
+
+        <article class="security-card">
+          <div class="card-icon">◇</div>
+          <h3>Secure Connections</h3>
+          <p>
+            Secure communication technologies, including HTTPS and
+            appropriately configured server connections, are important
+            parts of the intended infrastructure.
+          </p>
+        </article>
+
+        <article class="security-card">
+          <div class="card-icon">⌁</div>
+          <h3>Access Management</h3>
+          <p>
+            Administrative access should be restricted to authorised
+            personnel with appropriate permissions.
+          </p>
+        </article>
+
+        <article class="security-card">
+          <div class="card-icon">◎</div>
+          <h3>Activity Monitoring</h3>
+          <p>
+            Appropriate logging and monitoring can help identify unusual
+            account activity and investigate security incidents.
+          </p>
+        </article>
+
+        <article class="security-card">
+          <div class="card-icon">✧</div>
+          <h3>Ongoing Improvement</h3>
+          <p>
+            Security practices should be reviewed and improved as the
+            platform, its infrastructure and potential threats evolve.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section">
+    <div class="container split">
+      <div>
+        <div class="eyebrow">Protect Your Account</div>
+        <h2>Your security also depends on good habits.</h2>
+        <p>
+          Users should take care when accessing cryptocurrency services.
+          No legitimate platform representative should ask you to reveal
+          your private wallet recovery phrase or password.
+        </p>
+
+        <ul class="check-list">
+          <li>Use a strong, unique account password.</li>
+          <li>Enable additional account verification when available.</li>
+          <li>Never share your password or recovery phrase.</li>
+          <li>Check website addresses before signing in.</li>
+          <li>Be cautious of unexpected messages and suspicious links.</li>
+          <li>Contact official support if you notice unusual activity.</li>
+        </ul>
+      </div>
+
+      <div class="privacy-panel">
+        <h3>Privacy matters</h3>
+        <p>
+          CodVest intends to explain what information is collected,
+          why it is needed, how it is used and how users can exercise
+          applicable privacy rights.
+        </p>
+        <p>
+          Personal information should not be treated as a product.
+          Access should be limited to authorised purposes and handled
+          under applicable data protection requirements.
+        </p>
+        <p>
+          Detailed data handling practices will be set out in the
+          platform's Privacy Policy before live registration begins.
+        </p>
+        <a href="contact.html" class="gold-button">Contact Our Team</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Investment Awareness</div>
+        <h2>Understand cryptocurrency risks</h2>
+        <p>
+          Security is not the same as investment protection. Cryptocurrency
+          markets carry financial risks even when accounts and systems
+          are properly protected.
+        </p>
+      </div>
+
+      <div class="warning">
+        <h3>Important Risk Disclosure</h3>
+        <p>
+          Cryptocurrency prices can be highly volatile. You may lose some
+          or all of your invested capital. Digital assets may also involve
+          custody, technology, liquidity, operational and regulatory risks.
+          No investment return is guaranteed. Users should review all
+          applicable terms and seek independent professional advice where
+          appropriate before making investment decisions.
+        </p>
+      </div>
+
+      <div class="warning">
+        <h3>Service Availability and Regulatory Notice</h3>
+        <p>
+          The security features described on this page represent the
+          platform's intended approach and are not a certification,
+          audit report or guarantee that every control is currently
+          operational. Live investment services will be offered only
+          when the required legal, regulatory, operational and security
+          arrangements are in place.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="eyebrow">Need Assistance?</div>
+      <h2>We're here to help.</h2>
+      <p>
+        If you have questions about account safety, privacy or the
+        CodVest platform, contact our team.
+      </p>
+      <a href="contact.html" class="gold-button">Contact CodVest</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-content">
+    <div>© 2026 CodVest. A CODLONT company.</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="investment-plans.html">Investment Plans</a>
+      <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuButton = document.getElementById("menuButton");
+  const navLinks = document.getElementById("navLinks");
+
+  menuButton.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("show");
+    });
+  });
+</script>
+
+</body>
+</html>
