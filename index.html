@@ -2,806 +2,1184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1420">
-<title>CodVest | Digital Asset Investment</title>
-<meta name="description" content="CodVest is a cryptocurrency investment management platform by CODLONT.">
-<style>
-:root {
-  --bg: #0b1420;
-  --panel: #111f2e;
-  --green: #19c995;
-  --white: #f5f8fa;
-  --muted: #9aaaba;
-  --border: rgba(255,255,255,.09);
-}
-* {box-sizing:border-box;margin:0;padding:0}
-html {scroll-behavior:smooth}
-body {
-  font-family: Inter, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--white);
-  line-height:1.6;
-}
-a {color:inherit;text-decoration:none}
-button {font:inherit;cursor:pointer}
-.container {width:min(1160px,90%);margin:auto}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>CodVest | Dashboard</title>
 
-/* NAVIGATION */
-header {
-  height:78px;
-  display:flex;
-  align-items:center;
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  background:rgba(11,20,32,.95);
-  backdrop-filter:blur(15px);
-  z-index:100;
-}
-.nav {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  width:100%;
-}
-.logo {
-  display:flex;
-  align-items:center;
-  gap:11px;
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-.logo-icon {
-  width:39px;height:39px;
-  display:grid;place-items:center;
-  background:var(--green);
-  color:#071b16;
-  border-radius:11px;
-  font-size:23px;
-  font-weight:900;
-}
-.logo span {color:var(--green)}
-.nav-links {display:flex;align-items:center;gap:30px}
-.nav-links a {font-size:14px;color:#c4d0db}
-.nav-links a:hover {color:var(--green)}
-.nav-actions {display:flex;gap:12px;align-items:center}
-.btn {
-  padding:12px 21px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:650;
-  font-size:14px;
-  transition:.2s;
-}
-.btn-green {
-  background:var(--green);
-  color:#061a15;
-  border-color:var(--green);
-}
-.btn-green:hover {background:#35e0ad}
-.btn-outline:hover {border-color:var(--green);color:var(--green)}
-.menu-btn {
-  display:none;
-  background:none;
-  border:0;
-  color:white;
-  font-size:27px;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-/* HERO */
-.hero {
-  padding:100px 0 90px;
-  overflow:hidden;
-  position:relative;
-}
-.hero-grid {
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  align-items:center;
-  gap:65px;
-}
-.eyebrow {
-  color:var(--green);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:2px;
-  margin-bottom:23px;
-}
-.hero h1 {
-  font-size:clamp(43px,6vw,70px);
-  line-height:1.08;
-  letter-spacing:-3px;
-  margin-bottom:24px;
-}
-.hero h1 span {color:var(--green)}
-.hero-description {
-  max-width:530px;
-  color:var(--muted);
-  font-size:17px;
-  margin-bottom:32px;
-}
-.hero-buttons {display:flex;gap:13px;flex-wrap:wrap}
-.hero-note {font-size:11px;color:var(--muted);margin-top:23px}
-.visual {
-  position:relative;
-  background:linear-gradient(145deg,#152c3b,#101b29);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:27px;
-  box-shadow:0 25px 80px rgba(0,0,0,.3);
-}
-.visual-top {display:flex;justify-content:space-between;align-items:center}
-.visual-label {font-size:12px;color:var(--muted)}
-.demo-tag {
-  font-size:10px;
-  color:var(--green);
-  border:1px solid rgba(25,201,149,.3);
-  padding:5px 9px;
-  border-radius:20px;
-}
-.visual h2 {font-size:32px;margin-top:22px}
-.visual-sub {color:var(--muted);font-size:12px}
-.chart {
-  width:100%;
-  height:170px;
-  margin:20px 0;
-}
-.chart svg {width:100%;height:100%;overflow:visible}
-.stats {display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat {
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--border);
-  padding:15px;
-  border-radius:10px;
-}
-.stat small {color:var(--muted);display:block;font-size:11px}
-.stat strong {font-size:17px}
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #111111;
+      --panel-light: #171717;
+      --gold: #d8b56a;
+      --gold-light: #f0d99c;
+      --silver: #c7c7c7;
+      --muted: #858585;
+      --white: #f5f5f5;
+      --border: rgba(255,255,255,.09);
+      --green: #8dc9a0;
+      --red: #d98787;
+    }
 
-/* TRUST STRIP */
-.trust-strip {
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:25px 0;
-}
-.trust-items {
-  display:flex;
-  justify-content:space-around;
-  gap:20px;
-  flex-wrap:wrap;
-  color:#c1ccd6;
-  font-size:13px;
-}
-.trust-items span {display:flex;gap:9px;align-items:center}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* GENERAL SECTIONS */
-section {padding:90px 0}
-.section-heading {text-align:center;margin-bottom:48px}
-.section-heading h2 {
-  font-size:clamp(30px,4vw,43px);
-  letter-spacing:-1.5px;
-  margin-bottom:13px;
-}
-.section-heading p {
-  max-width:610px;
-  margin:auto;
-  color:var(--muted);
-  font-size:15px;
-}
-.green {color:var(--green)}
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 75% 0%, rgba(216,181,106,.08), transparent 35%),
+        var(--bg);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+    }
 
-/* ABOUT */
-.about-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:65px;
-  align-items:center;
-}
-.about-box {
-  background:linear-gradient(145deg,#142a37,#10202d);
-  padding:35px;
-  border-radius:18px;
-  border:1px solid var(--border);
-}
-.about-box h3 {font-size:26px;margin-bottom:15px}
-.about-box p {color:var(--muted);font-size:14px}
-.about-points {display:grid;gap:20px}
-.point {display:flex;gap:15px}
-.point-icon {
-  width:43px;height:43px;flex-shrink:0;
-  display:grid;place-items:center;
-  background:rgba(25,201,149,.1);
-  border-radius:12px;
-  color:var(--green);
-  font-size:20px;
-}
-.point h3 {font-size:16px;margin-bottom:5px}
-.point p {color:var(--muted);font-size:13px}
+    button, a {
+      font: inherit;
+    }
 
-/* HOW IT WORKS */
-.steps {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-.step {
-  background:var(--panel);
-  border:1px solid var(--border);
-  padding:28px;
-  border-radius:15px;
-}
-.step-number {
-  font-size:13px;
-  color:var(--green);
-  font-weight:800;
-}
-.step h3 {margin:17px 0 9px;font-size:18px}
-.step p {font-size:13px;color:var(--muted)}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* PLANS */
-.plans-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:17px;
-}
-.plan {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:25px;
-}
-.plan.featured {border-color:var(--green)}
-.plan-label {color:var(--green);font-size:12px;font-weight:800}
-.plan h3 {font-size:25px;margin:12px 0}
-.plan p {color:var(--muted);font-size:13px}
-.plan ul {list-style:none;margin:20px 0}
-.plan li {
-  color:#c2ced8;
-  font-size:13px;
-  padding:9px 0;
-  border-bottom:1px solid var(--border);
-}
-.plan li::before {content:"✓";color:var(--green);margin-right:10px}
-.plan .btn {width:100%;margin-top:8px}
+    button {
+      cursor: pointer;
+    }
 
-/* SECURITY */
-.security {
-  background:#101e2c;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-}
-.security-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-}
-.security-card {text-align:center;padding:20px}
-.security-icon {font-size:30px;margin-bottom:15px}
-.security-card h3 {font-size:17px;margin-bottom:9px}
-.security-card p {color:var(--muted);font-size:13px}
+    .app {
+      min-height: 100vh;
+    }
 
-/* FAQ */
-.faq {max-width:760px;margin:auto}
-details {
-  border-bottom:1px solid var(--border);
-  padding:20px 0;
-}
-summary {cursor:pointer;font-weight:650;font-size:15px}
-details p {color:var(--muted);font-size:13px;padding-top:13px}
+    /* SIDEBAR */
 
-/* FOOTER */
-footer {padding:55px 0 25px}
-.footer-grid {
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:40px;
-  padding-bottom:35px;
-}
-.footer-about p {color:var(--muted);font-size:13px;max-width:340px;margin-top:15px}
-.footer-column h4 {margin-bottom:15px}
-.footer-column a {
-  display:block;color:var(--muted);
-  font-size:13px;margin:10px 0;
-}
-.footer-column a:hover {color:var(--green)}
-.footer-bottom {
-  border-top:1px solid var(--border);
-  padding-top:22px;
-  color:var(--muted);
-  font-size:11px;
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:15px;
-}
-.disclaimer {
-  color:#8f9eae;
-  font-size:11px;
-  line-height:1.8;
-  margin-top:25px;
-  border-top:1px solid var(--border);
-  padding-top:20px;
-}
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 20;
+      padding: 30px 20px;
+      background: rgba(12,12,12,.96);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
 
-/* MOBILE */
-@media(max-width:850px) {
-  .nav-links {
-    display:none;
-    position:absolute;
-    top:78px;left:0;width:100%;
-    background:#101e2c;
-    padding:25px 5%;
-    flex-direction:column;
-    align-items:flex-start;
-    border-bottom:1px solid var(--border);
-  }
-  .nav-links.open {display:flex}
-  .menu-btn {display:block}
-  .nav-actions .btn-outline {display:none}
-  .hero {padding:70px 0}
-  .hero-grid,.about-grid {grid-template-columns:1fr;gap:40px}
-  .steps {grid-template-columns:1fr}
-  .plans-grid {grid-template-columns:1fr 1fr}
-  .security-grid {grid-template-columns:1fr}
-}
-@media(max-width:550px) {
-  .hero h1 {letter-spacing:-2px}
-  .plans-grid {grid-template-columns:1fr}
-  .footer-grid {grid-template-columns:1fr 1fr}
-  .footer-about {grid-column:1/-1}
-  .visual {padding:19px}
-  section {padding:65px 0}
-}
-</style>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 10px;
+      margin-bottom: 48px;
+    }
+
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-light);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      box-shadow: 0 0 22px rgba(216,181,106,.13);
+    }
+
+    .brand-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.8px;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .nav-label {
+      padding: 0 12px;
+      margin: 0 0 13px;
+      color: #666;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .nav-link {
+      min-height: 47px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 0 13px;
+      color: #929292;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      font-size: 13px;
+      transition: .25s ease;
+    }
+
+    .nav-link:hover {
+      color: white;
+      background: #181818;
+    }
+
+    .nav-link.active {
+      color: var(--gold-light);
+      background: linear-gradient(100deg, rgba(216,181,106,.14), rgba(216,181,106,.035));
+      border-color: rgba(216,181,106,.19);
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .help-card {
+      padding: 17px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: linear-gradient(145deg, #191919, #101010);
+    }
+
+    .help-card strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+    }
+
+    .help-card p {
+      margin-bottom: 13px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .help-card a {
+      color: var(--gold);
+      font-size: 11px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 13px 8px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e5c77f, #806331);
+      color: #17120a;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .user-info {
+      min-width: 0;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .user-info span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* MAIN CONTENT */
+
+    .main {
+      max-width: 1700px;
+      margin-left: 250px;
+      padding: 32px 42px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 34px;
+    }
+
+    .welcome small {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .welcome h1 {
+      margin-top: 7px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(24px, 3vw, 32px);
+      letter-spacing: -1.2px;
+    }
+
+    .welcome h1 span {
+      color: var(--gold);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #ddd;
+      background: #151515;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 17px;
+    }
+
+    .icon-button:hover {
+      border-color: var(--gold);
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 13px;
+      border: 1px solid rgba(216,181,106,.22);
+      border-radius: 30px;
+      color: var(--gold-light);
+      font-size: 11px;
+      background: rgba(216,181,106,.06);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 9px var(--gold);
+    }
+
+    /* DEMO NOTICE */
+
+    .demo-notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      margin-bottom: 23px;
+      border: 1px solid rgba(216,181,106,.2);
+      border-radius: 10px;
+      background: rgba(216,181,106,.055);
+      color: #d9c18f;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* CAROUSEL */
+
+    .carousel {
+      min-height: 205px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 27px;
+      border: 1px solid rgba(216,181,106,.24);
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 85% 50%, rgba(216,181,106,.17), transparent 28%),
+        linear-gradient(110deg, #1b1914, #101010 60%, #17140e);
+    }
+
+    .carousel-track {
+      min-height: 205px;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      padding: 32px 38px;
+      opacity: 0;
+      transform: translateX(25px);
+      pointer-events: none;
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .slide-content {
+      max-width: 590px;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      margin-bottom: 13px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .slide h2 {
+      margin-bottom: 9px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(21px, 3vw, 29px);
+      letter-spacing: -.8px;
+    }
+
+    .slide p {
+      max-width: 500px;
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .slide-art {
+      width: 125px;
+      height: 125px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(216,181,106,.28);
+      border-radius: 50%;
+      color: var(--gold-light);
+      font-size: 49px;
+      background: radial-gradient(circle, rgba(216,181,106,.16), rgba(216,181,106,.015) 70%);
+      box-shadow: 0 0 45px rgba(216,181,106,.08);
+    }
+
+    .carousel-controls {
+      position: absolute;
+      right: 27px;
+      bottom: 19px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border: 0;
+      border-radius: 20px;
+      background: #65605a;
+      transition: .3s;
+    }
+
+    .carousel-dot.active {
+      width: 23px;
+      background: var(--gold);
+    }
+
+    /* BALANCE CARDS */
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 17px;
+      letter-spacing: -.3px;
+    }
+
+    .section-heading a {
+      color: var(--gold);
+      font-size: 11px;
+    }
+
+    .balance-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 29px;
+    }
+
+    .balance-card {
+      min-height: 150px;
+      padding: 21px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(145deg, #191919, #101010);
+    }
+
+    .balance-card.primary {
+      border-color: rgba(216,181,106,.3);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(216,181,106,.13), transparent 48%),
+        linear-gradient(145deg, #1d1a14, #111);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #aaa;
+      font-size: 11px;
+    }
+
+    .card-symbol {
+      color: var(--gold);
+      font-size: 17px;
+    }
+
+    .balance-value {
+      margin-top: 22px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(21px, 2.7vw, 29px);
+      font-weight: 600;
+      letter-spacing: -.9px;
+    }
+
+    .balance-value small {
+      color: #999;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .balance-foot {
+      margin-top: 8px;
+      color: #777;
+      font-size: 10px;
+    }
+
+    .gold-text {
+      color: var(--gold-light);
+    }
+
+    /* LOWER GRID */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(145deg, #151515, #101010);
+    }
+
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .panel-heading h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 14px;
+    }
+
+    .panel-heading a {
+      color: var(--gold);
+      font-size: 10px;
+    }
+
+    .investment-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .investment-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .coin-icon {
+      width: 39px;
+      height: 39px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #202020;
+      font-size: 18px;
+    }
+
+    .investment-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .investment-info strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .investment-info span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .investment-amount {
+      text-align: right;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .investment-amount span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    .empty-state {
+      padding: 22px 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    /* ACTIVITY */
+
+    .activity-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .activity-row:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-icon {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #202020;
+      color: var(--gold);
+      font-size: 15px;
+    }
+
+    .activity-info {
+      flex: 1;
+    }
+
+    .activity-info strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    .activity-info span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .activity-amount {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* MARKET WATCH */
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .market-card {
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #131313;
+    }
+
+    .market-card-top {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .market-card-top strong {
+      font-size: 12px;
+    }
+
+    .market-card-top span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .market-card-value {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .market-note {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    /* MOBILE NAV */
+
+    .mobile-nav {
+      display: none;
+    }
+
+    .footer-note {
+      padding: 25px 0 0;
+      color: #626262;
+      font-size: 10px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .main {
+        padding: 28px 25px 50px;
+      }
+
+      .balance-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .balance-card.primary {
+        grid-column: span 2;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 23px 16px 105px;
+      }
+
+      .topbar {
+        margin-bottom: 24px;
+      }
+
+      .welcome h1 {
+        font-size: 24px;
+      }
+
+      .status-pill {
+        display: none;
+      }
+
+      .demo-notice {
+        font-size: 10px;
+      }
+
+      .carousel,
+      .carousel-track {
+        min-height: 225px;
+      }
+
+      .slide {
+        padding: 25px 22px 45px;
+      }
+
+      .slide-art {
+        width: 75px;
+        height: 75px;
+        font-size: 30px;
+      }
+
+      .slide p {
+        font-size: 11px;
+      }
+
+      .carousel-controls {
+        right: 20px;
+        bottom: 16px;
+      }
+
+      .balance-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .balance-card {
+        min-height: 135px;
+        padding: 15px;
+      }
+
+      .balance-card.primary {
+        grid-column: span 2;
+      }
+
+      .balance-value {
+        font-size: 22px;
+      }
+
+      .content-grid {
+        gap: 14px;
+      }
+
+      .panel {
+        padding: 17px;
+      }
+
+      .market-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .market-card {
+        padding: 15px;
+      }
+
+      .mobile-nav {
+        position: fixed;
+        z-index: 30;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 10px 5px;
+        border: 1px solid rgba(216,181,106,.2);
+        border-radius: 17px;
+        background: rgba(16,16,16,.96);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 10px 40px rgba(0,0,0,.5);
+      }
+
+      .mobile-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: #858585;
+        font-size: 9px;
+        padding: 5px 0;
+      }
+
+      .mobile-link span:first-child {
+        font-size: 18px;
+      }
+
+      .mobile-link.active {
+        color: var(--gold-light);
+      }
+
+      .footer-note {
+        padding-bottom: 10px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .slide-art {
+        display: none;
+      }
+
+      .balance-value {
+        font-size: 19px;
+      }
+
+      .top-actions {
+        gap: 6px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+<div class="app">
 
-<header>
-  <div class="container nav">
-    <a href="#" class="logo">
-      <div class="logo-icon">C</div>
-      Cod<span>Vest</span>
+  <!-- DESKTOP SIDEBAR -->
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">C</div>
+      <div class="brand-name">Cod<span>Vest</span></div>
     </a>
 
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#how">How it works</a>
-      <a href="#plans">Investment levels</a>
-      <a href="#security">Security</a>
-      <a href="#faq">FAQ</a>
+    <div class="nav-label">Workspace</div>
+
+    <nav class="nav-list">
+      <a class="nav-link active" href="index.html">
+        <span class="nav-icon">▦</span> Dashboard
+      </a>
+      <a class="nav-link" href="investments.html">
+        <span class="nav-icon">◈</span> Investments
+      </a>
+      <a class="nav-link" href="transactions.html">
+        <span class="nav-icon">⇄</span> Transactions
+      </a>
+      <a class="nav-link" href="markets.html">
+        <span class="nav-icon">⌁</span> Markets
+      </a>
     </nav>
 
-    <div class="nav-actions">
-      <a href="#faq" class="btn btn-outline">Learn more</a>
-      <a href="#plans" class="btn btn-green">Explore plans</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    </div>
-  </div>
-</header>
+    <div class="nav-label" style="margin-top:34px;">Account</div>
 
-<main>
+    <nav class="nav-list">
+      <a class="nav-link" href="profile.html">
+        <span class="nav-icon">◎</span> My Profile
+      </a>
+      <a class="nav-link" href="security.html">
+        <span class="nav-icon">◇</span> Security
+      </a>
+      <a class="nav-link" href="support.html">
+        <span class="nav-icon">◌</span> Support
+      </a>
+      <a class="nav-link" href="about.html">
+        <span class="nav-icon">ⓘ</span> About CodVest
+      </a>
+    </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="container hero-grid">
-
-    <div>
-      <div class="eyebrow">DIGITAL ASSET INVESTMENT MANAGEMENT</div>
-
-      <h1>
-        A smarter way to approach
-        <span>crypto investing.</span>
-      </h1>
-
-      <p class="hero-description">
-        Discover a modern approach to cryptocurrency investment
-        management. Monitor your portfolio, understand your
-        performance and stay informed about your investments
-        with CodVest.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#plans" class="btn btn-green">Explore investment levels →</a>
-        <a href="#about" class="btn btn-outline">Discover CodVest</a>
+    <div class="sidebar-bottom">
+      <div class="help-card">
+        <strong>Need assistance?</strong>
+        <p>Our support team is here to help with your account.</p>
+        <a href="support.html">Contact support →</a>
       </div>
 
-      <p class="hero-note">
-        Cryptocurrency investments involve risk. Returns are not guaranteed.
-      </p>
-    </div>
-
-    <!-- DEMONSTRATION DASHBOARD -->
-    <div class="visual">
-      <div class="visual-top">
-        <span class="visual-label">PORTFOLIO PREVIEW</span>
-        <span class="demo-tag">DEMO DATA</span>
-      </div>
-
-      <h2>Crypto portfolio</h2>
-      <p class="visual-sub">Illustrative portfolio performance</p>
-
-      <div class="chart">
-        <svg viewBox="0 0 500 170" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#19c995" stop-opacity=".3"/>
-              <stop offset="100%" stop-color="#19c995" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M0 130 L45 112 L85 120 L130 78 L175 95 L220 55 L260 70 L305 40 L350 58 L400 20 L450 36 L500 8 L500 170 L0 170 Z"
-          fill="url(#area)"/>
-          <path d="M0 130 L45 112 L85 120 L130 78 L175 95 L220 55 L260 70 L305 40 L350 58 L400 20 L450 36 L500 8"
-          fill="none" stroke="#19c995" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <div class="stats">
-        <div class="stat">
-          <small>Portfolio value</small>
-          <strong>Demo balance</strong>
-        </div>
-        <div class="stat">
-          <small>Performance</small>
-          <strong>Demo data</strong>
-        </div>
-        <div class="stat">
-          <small>Investment assets</small>
-          <strong>Crypto</strong>
-        </div>
-        <div class="stat">
-          <small>Account status</small>
-          <strong>Preview</strong>
+      <div class="user-profile">
+        <div class="avatar">CV</div>
+        <div class="user-info">
+          <strong>CodVest Member</strong>
+          <span>Demo account</span>
         </div>
       </div>
     </div>
+  </aside>
 
-  </div>
-</section>
+  <!-- MAIN DASHBOARD -->
+  <main class="main">
 
-<!-- TRUST STRIP -->
-<div class="trust-strip">
-  <div class="container trust-items">
-    <span>◇ Transparent reporting</span>
-    <span>◈ Individual accounts</span>
-    <span>⌁ Digital asset management</span>
-    <span>◎ Security focused</span>
-  </div>
+    <header class="topbar">
+      <div class="welcome">
+        <small>CodVest / Overview</small>
+        <h1>Welcome back, <span>Investor.</span></h1>
+      </div>
+
+      <div class="top-actions">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Dashboard preview
+        </div>
+        <button class="icon-button" aria-label="Notifications" title="Notifications">♧</button>
+        <a class="icon-button" href="profile.html" aria-label="Profile" title="Profile">◎</a>
+      </div>
+    </header>
+
+    <div class="demo-notice">
+      <span>ⓘ</span>
+      <span><strong>Preview mode:</strong> The figures and sample activity below are illustrative only. No real funds, transactions or investment returns are represented.</span>
+    </div>
+
+    <!-- AUTOMATIC CAROUSEL -->
+    <section class="carousel" aria-label="CodVest highlights">
+      <div class="carousel-track">
+
+        <article class="slide active">
+          <div class="slide-content">
+            <span class="slide-tag">Welcome to CodVest</span>
+            <h2>A clearer view of your investment journey.</h2>
+            <p>Your portfolio overview, account activity and investment information — organised in one place.</p>
+          </div>
+          <div class="slide-art">✧</div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-content">
+            <span class="slide-tag">Investment insight</span>
+            <h2>Understand your portfolio.</h2>
+            <p>Explore your investment allocations and account history. Review the details before making financial decisions.</p>
+          </div>
+          <div class="slide-art">◈</div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-content">
+            <span class="slide-tag">Security first</span>
+            <h2>Your account deserves protection.</h2>
+            <p>Keep your login details private and use strong, unique passwords. Account security features will be connected in a later stage.</p>
+          </div>
+          <div class="slide-art">◇</div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-content">
+            <span class="slide-tag">Market awareness</span>
+            <h2>Stay informed. Invest thoughtfully.</h2>
+            <p>Cryptocurrency markets can be volatile. Understand the risks before committing funds to any investment.</p>
+          </div>
+          <div class="slide-art">⌁</div>
+        </article>
+
+      </div>
+
+      <div class="carousel-controls" aria-label="Carousel controls">
+        <button class="carousel-dot active" aria-label="Show slide 1"></button>
+        <button class="carousel-dot" aria-label="Show slide 2"></button>
+        <button class="carousel-dot" aria-label="Show slide 3"></button>
+        <button class="carousel-dot" aria-label="Show slide 4"></button>
+      </div>
+    </section>
+
+    <!-- BALANCES -->
+    <section>
+      <div class="section-heading">
+        <h2>Portfolio overview</h2>
+        <a href="investments.html">View investments →</a>
+      </div>
+
+      <div class="balance-grid">
+
+        <div class="balance-card primary">
+          <div class="card-top">
+            <span>Total portfolio value</span>
+            <span class="card-symbol">◈</span>
+          </div>
+          <div class="balance-value">₦0.00</div>
+          <div class="balance-foot">Demo balance · Not connected to real funds</div>
+        </div>
+
+        <div class="balance-card">
+          <div class="card-top">
+            <span>Available balance</span>
+            <span class="card-symbol">◇</span>
+          </div>
+          <div class="balance-value">₦0.00</div>
+          <div class="balance-foot">Illustrative account figure</div>
+        </div>
+
+        <div class="balance-card">
+          <div class="card-top">
+            <span>Invested amount</span>
+            <span class="card-symbol">↗</span>
+          </div>
+          <div class="balance-value">₦0.00</div>
+          <div class="balance-foot">Illustrative account figure</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INVESTMENTS AND ACTIVITY -->
+    <section class="content-grid">
+
+      <div class="panel">
+        <div class="panel-heading">
+          <h3>My investments</h3>
+          <a href="investments.html">View all →</a>
+        </div>
+
+        <div class="empty-state">
+          <div style="font-size:28px;color:#d8b56a;margin-bottom:12px;">◈</div>
+          <strong style="display:block;color:#ddd;margin-bottom:7px;">No investment records yet</strong>
+          Your verified investment positions will appear here once your account is connected.
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-heading">
+          <h3>Recent activity</h3>
+          <a href="transactions.html">View all →</a>
+        </div>
+
+        <div class="empty-state">
+          <div style="font-size:28px;color:#d8b56a;margin-bottom:12px;">⇄</div>
+          <strong style="display:block;color:#ddd;margin-bottom:7px;">No recent transactions</strong>
+          Your confirmed deposits, withdrawals and account activity will appear here.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MARKET WATCH -->
+    <section class="panel">
+      <div class="panel-heading">
+        <h3>Market watch</h3>
+        <a href="markets.html">Explore markets →</a>
+      </div>
+
+      <div class="market-grid">
+
+        <div class="market-card">
+          <div class="market-card-top">
+            <span style="font-size:19px;">₿</span>
+            <div>
+              <strong>Bitcoin</strong><br>
+              <span>BTC</span>
+            </div>
+          </div>
+          <div class="market-card-value">—</div>
+          <div class="market-note">Live price not connected</div>
+        </div>
+
+        <div class="market-card">
+          <div class="market-card-top">
+            <span style="font-size:19px;">◆</span>
+            <div>
+              <strong>Ethereum</strong><br>
+              <span>ETH</span>
+            </div>
+          </div>
+          <div class="market-card-value">—</div>
+          <div class="market-note">Live price not connected</div>
+        </div>
+
+        <div class="market-card">
+          <div class="market-card-top">
+            <span style="font-size:19px;">◎</span>
+            <div>
+              <strong>Solana</strong><br>
+              <span>SOL</span>
+            </div>
+          </div>
+          <div class="market-card-value">—</div>
+          <div class="market-note">Live price not connected</div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="footer-note">
+      CodVest is a CODLONT brand. Cryptocurrency investments involve substantial risk and may result in loss of capital. This dashboard preview does not represent actual account balances or investment performance.
+    </div>
+
+  </main>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a class="mobile-link active" href="index.html">
+      <span>▦</span><span>Home</span>
+    </a>
+    <a class="mobile-link" href="investments.html">
+      <span>◈</span><span>Invest</span>
+    </a>
+    <a class="mobile-link" href="transactions.html">
+      <span>⇄</span><span>Activity</span>
+    </a>
+    <a class="mobile-link" href="markets.html">
+      <span>⌁</span><span>Markets</span>
+    </a>
+    <a class="mobile-link" href="profile.html">
+      <span>◎</span><span>Profile</span>
+    </a>
+  </nav>
+
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container about-grid">
-
-    <div class="about-box">
-      <div class="eyebrow">ABOUT CODVEST</div>
-      <h3>Technology meets modern investment management.</h3>
-      <p>
-        CodVest is a proposed digital asset investment management
-        platform developed by CODLONT. Our vision is to make
-        investment information, portfolio monitoring and
-        professional digital asset management accessible
-        through one modern experience.
-      </p>
-    </div>
-
-    <div class="about-points">
-      <div class="point">
-        <div class="point-icon">◈</div>
-        <div>
-          <h3>Individual investment accounts</h3>
-          <p>Each customer will have a dedicated investment record
-          and a transparent view of their portfolio.</p>
-        </div>
-      </div>
-
-      <div class="point">
-        <div class="point-icon">⌁</div>
-        <div>
-          <h3>Portfolio monitoring</h3>
-          <p>Follow your investment performance and transaction
-          history in one place.</p>
-        </div>
-      </div>
-
-      <div class="point">
-        <div class="point-icon">◎</div>
-        <div>
-          <h3>Security and accountability</h3>
-          <p>Our intended platform design prioritizes secure
-          accounts, clear records and responsible reporting.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how" style="background:#101e2c">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">THE PROCESS</div>
-      <h2>How <span class="green">CodVest</span> works</h2>
-      <p>
-        A straightforward investment management experience
-        designed around transparency and informed decisions.
-      </p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">STEP 01</div>
-        <h3>Create your account</h3>
-        <p>Register and complete the required identity
-        verification process.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-number">STEP 02</div>
-        <h3>Explore investment options</h3>
-        <p>Review available investment strategies, risk levels,
-        terms and fees before making a decision.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-number">STEP 03</div>
-        <h3>Monitor your portfolio</h3>
-        <p>View investment activity, performance, profits
-        or losses and eligible withdrawal information.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INVESTMENT LEVELS -->
-<section id="plans">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">INVESTMENT OPTIONS</div>
-      <h2>Find your investment level</h2>
-      <p>
-        CodVest is planning multiple investment account
-        categories with different entry requirements and
-        risk profiles.
-      </p>
-    </div>
-
-    <div class="plans-grid">
-
-      <div class="plan">
-        <div class="plan-label">LEVEL 01</div>
-        <h3>Starter</h3>
-        <p>Designed for people beginning their investment journey.</p>
-        <ul>
-          <li>Entry-level investment category</li>
-          <li>Individual portfolio record</li>
-          <li>Performance reporting</li>
-          <li>Risk information</li>
-        </ul>
-        <a href="#faq" class="btn btn-outline">Coming soon</a>
-      </div>
-
-      <div class="plan">
-        <div class="plan-label">LEVEL 02</div>
-        <h3>Silver</h3>
-        <p>A category intended for growing investment portfolios.</p>
-        <ul>
-          <li>Silver investment category</li>
-          <li>Individual portfolio record</li>
-          <li>Performance reporting</li>
-          <li>Risk information</li>
-        </ul>
-        <a href="#faq" class="btn btn-outline">Coming soon</a>
-      </div>
-
-      <div class="plan featured">
-        <div class="plan-label">LEVEL 03</div>
-        <h3>Gold</h3>
-        <p>A planned category for intermediate investors.</p>
-        <ul>
-          <li>Gold investment category</li>
-          <li>Individual portfolio record</li>
-          <li>Performance reporting</li>
-          <li>Risk information</li>
-        </ul>
-        <a href="#faq" class="btn btn-green">Coming soon</a>
-      </div>
-
-      <div class="plan">
-        <div class="plan-label">LEVEL 04</div>
-        <h3>Platinum</h3>
-        <p>A planned category for larger investment portfolios.</p>
-        <ul>
-          <li>Platinum investment category</li>
-          <li>Individual portfolio record</li>
-          <li>Performance reporting</li>
-          <li>Risk information</li>
-        </ul>
-        <a href="#faq" class="btn btn-outline">Coming soon</a>
-      </div>
-
-      <div class="plan">
-        <div class="plan-label">LEVEL 05</div>
-        <h3>Diamond</h3>
-        <p>A planned premium investment category.</p>
-        <ul>
-          <li>Diamond investment category</li>
-          <li>Individual portfolio record</li>
-          <li>Performance reporting</li>
-          <li>Risk information</li>
-        </ul>
-        <a href="#faq" class="btn btn-outline">Coming soon</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- SECURITY -->
-<section class="security" id="security">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">OUR PRINCIPLES</div>
-      <h2>Built around transparency</h2>
-      <p>
-        Financial technology requires responsibility.
-        Our platform is being designed with these principles
-        at its foundation.
-      </p>
-    </div>
-
-    <div class="security-grid">
-      <div class="security-card">
-        <div class="security-icon">🔐</div>
-        <h3>Account security</h3>
-        <p>Secure authentication and protection of customer accounts.</p>
-      </div>
-
-      <div class="security-card">
-        <div class="security-icon">📊</div>
-        <h3>Transparent reporting</h3>
-        <p>Clear records of portfolio activity, fees, profits and losses.</p>
-      </div>
-
-      <div class="security-card">
-        <div class="security-icon">⚖️</div>
-        <h3>Responsible management</h3>
-        <p>Risk disclosure, appropriate oversight and regulatory compliance.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="container">
-    <div class="section-heading">
-      <div class="eyebrow">QUESTIONS</div>
-      <h2>Frequently asked questions</h2>
-    </div>
-
-    <div class="faq">
-      <details>
-        <summary>What is CodVest?</summary>
-        <p>CodVest is a proposed cryptocurrency investment
-        management platform being developed by CODLONT.</p>
-      </details>
-
-      <details>
-        <summary>How does managed investing work?</summary>
-        <p>Under a managed account arrangement, an appropriately
-        authorised investment manager manages the agreed portfolio
-        within the customer's mandate.</p>
-      </details>
-
-      <details>
-        <summary>Are investment returns guaranteed?</summary>
-        <p>No. Cryptocurrency markets are volatile. Investments
-        can lose value, and customers may lose some or all of
-        their invested capital.</p>
-      </details>
-
-      <details>
-        <summary>Can I withdraw my investment?</summary>
-        <p>Withdrawal rights, processing periods and any applicable
-        restrictions will be clearly disclosed in the final
-        investment agreement.</p>
-      </details>
-
-      <details>
-        <summary>When will CodVest launch?</summary>
-        <p>The platform is currently in development. Live
-        investment services will only be offered after the
-        necessary regulatory and operational arrangements
-        are established.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-
-    <div class="footer-grid">
-      <div class="footer-about">
-        <a href="#" class="logo">
-          <div class="logo-icon">C</div>
-          Cod<span>Vest</span>
-        </a>
-        <p>
-          A modern cryptocurrency investment management
-          platform envisioned and developed by CODLONT.
-        </p>
-      </div>
-
-      <div class="footer-column">
-        <h4>Platform</h4>
-        <a href="#about">About us</a>
-        <a href="#how">How it works</a>
-        <a href="#plans">Investment levels</a>
-        <a href="#security">Security</a>
-      </div>
-
-      <div class="footer-column">
-        <h4>Information</h4>
-        <a href="#faq">FAQs</a>
-        <a href="#security">Risk disclosure</a>
-        <a href="#faq">Contact information</a>
-      </div>
-    </div>
-
-    <div class="disclaimer">
-      <strong>Investment risk disclosure:</strong>
-      Cryptocurrency investments are highly volatile and
-      involve significant risk. The value of digital assets
-      can rise or fall, and investors may lose their entire
-      investment. No returns are guaranteed. This website is
-      currently a development preview and does not accept
-      deposits or offer live investment services.
-
-      <br><br>
-      CodVest is a proposed brand of CODLONT. No representation
-      of regulatory authorisation or licensing is made by this
-      development website.
-    </div>
-
-    <div class="footer-bottom">
-      <span>© <span id="year"></span> CodVest. All rights reserved.</span>
-      <span>AN INVESTMENT PLATFORM BY CODLONT</span>
-    </div>
-
-  </div>
-</footer>
-
 <script>
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
+  // AUTOMATIC CAROUSEL
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".carousel-dot");
+  const carousel = document.querySelector(".carousel");
 
-menuBtn.addEventListener("click", () => {
-  navLinks.classList.toggle("open");
-  menuBtn.textContent =
-    navLinks.classList.contains("open") ? "✕" : "☰";
-});
+  let currentSlide = 0;
+  let carouselTimer;
 
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    menuBtn.textContent = "☰";
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+    });
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function startCarousel() {
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      showSlide(index);
+      startCarousel();
+    });
   });
-});
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+  carousel.addEventListener("mouseenter", () => {
+    clearInterval(carouselTimer);
+  });
+
+  carousel.addEventListener("mouseleave", startCarousel);
+
+  startCarousel();
 </script>
 
 </body>
