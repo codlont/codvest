@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Contact Us | CodVest</title>
+  <meta name="description" content="Contact CodVest for questions about our cryptocurrency platform and services.">
+
+  <style>
+    :root {
+      --bg: #08090b;
+      --panel: #111317;
+      --gold: #d8b66e;
+      --gold-light: #f1dba7;
+      --text: #f5f5f5;
+      --muted: #a2a6ae;
+      --border: rgba(255,255,255,.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,9,11,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .brand span { color: var(--gold); }
+    .brand-symbol { width: 43px; height: 43px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold-light); }
+
+    .nav-button {
+      border: 1px solid var(--gold);
+      padding: 10px 17px;
+      border-radius: 5px;
+      color: var(--gold-light) !important;
+    }
+
+    .menu-button {
+      display: none;
+      color: var(--gold);
+      font-size: 28px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 0 65px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(216,182,110,.14), transparent 60%);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.15;
+      margin: 18px 0;
+    }
+
+    h1 span { color: var(--gold-light); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .section { padding: 65px 0 90px; }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 35px;
+      align-items: start;
+    }
+
+    .contact-info {
+      background: linear-gradient(145deg, #171a20, #0d0f12);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 35px;
+    }
+
+    .contact-info h2 {
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .contact-info > p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-icon {
+      width: 43px;
+      height: 43px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(216,182,110,.4);
+      border-radius: 8px;
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .contact-item h3 {
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .contact-item p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 35px;
+    }
+
+    .contact-form h2 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .form-description {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #d9d9d9;
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #090b0e;
+      color: white;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 5px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: .2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    select option { background: #111317; }
+
+    .submit-button {
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      padding: 15px;
+      background: linear-gradient(120deg, #b38c48, #f0dba8);
+      color: #101010;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-button:hover { opacity: .9; }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 14px;
+    }
+
+    .support-section {
+      background: #101216;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .support-card {
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      text-align: center;
+    }
+
+    .support-card .icon {
+      font-size: 30px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .support-card h3 { margin-bottom: 9px; }
+
+    .support-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 75px 20px;
+    }
+
+    .cta h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 12px 0;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 82px;
+        left: 0;
+        width: 100%;
+        background: #0d0f12;
+        padding: 25px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.show { display: flex; }
+      .menu-button { display: block; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .support-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 75px 0 50px; }
+      .section { padding: 45px 0 65px; }
+      .contact-info, .contact-form { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .brand { font-size: 24px; }
+      .brand-symbol { width: 39px; height: 39px; }
+      .footer-content { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <svg class="brand-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CodVest logo">
+        <defs>
+          <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="90">
+            <stop stop-color="#F4DFAD"/>
+            <stop offset="1" stop-color="#A47B35"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 7L85 50L50 93L15 50L50 7Z" stroke="url(#goldGradient)" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M50 24L70 50L50 76L30 50L50 24Z" stroke="#E5D1A1" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M10 35C23 17 42 9 62 13C79 16 91 29 94 45" stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="91" cy="45" r="5" fill="#F0D99C"/>
+      </svg>
+      Cod<span>Vest</span>
+    </a>
+
+    <button class="menu-button" id="menuButton" aria-label="Open navigation menu">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="investment-plans.html">Investment Plans</a>
+      <a href="security.html">Security</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html" class="nav-button">Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Contact CodVest</div>
+      <h1>Let's start a <span>conversation.</span></h1>
+      <p>
+        Have a question about CodVest, our proposed investment categories
+        or the platform? Send us an enquiry and our team can assist.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-layout">
+
+      <div class="contact-info">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>We'd like to hear from you.</h2>
+        <p>
+          Use the contact form or our official communication channels
+          for general questions and enquiries.
+        </p>
+
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div>
+            <h3>Email Support</h3>
+            <p>Official support email will be published here.</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">◷</div>
+          <div>
+            <h3>Support Hours</h3>
+            <p>Support availability will be announced when services launch.</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">◇</div>
+          <div>
+            <h3>Company</h3>
+            <p>CodVest — A CODLONT company.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="eyebrow">Send An Enquiry</div>
+        <h2>Contact our team</h2>
+        <p class="form-description">
+          Complete the fields below to prepare your enquiry.
+        </p>
+
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Enquiry Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="General enquiry">General enquiry</option>
+              <option value="Investment plans">Investment plans</option>
+              <option value="Account assistance">Account assistance</option>
+              <option value="Security and privacy">Security and privacy</option>
+              <option value="Business partnership">Business partnership</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">Prepare Enquiry</button>
+
+          <p class="form-note">
+            This demonstration form does not transmit or store messages.
+            A secure submission service must be connected before launch.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="support-section">
+    <div class="container">
+      <div class="support-grid">
+
+        <article class="support-card">
+          <div class="icon">✉</div>
+          <h3>General Enquiries</h3>
+          <p>
+            Questions about CodVest, the company and the proposed platform.
+          </p>
+        </article>
+
+        <article class="support-card">
+          <div class="icon">◇</div>
+          <h3>Account Information</h3>
+          <p>
+            Information about account registration, verification and access.
+          </p>
+        </article>
+
+        <article class="support-card">
+          <div class="icon">⌑</div>
+          <h3>Security Questions</h3>
+          <p>
+            Questions about account safety, privacy and responsible use.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="eyebrow">CodVest</div>
+      <h2>Thank you for your interest.</h2>
+      <p>
+        We appreciate your interest in CODLONT's cryptocurrency platform.
+        Follow the development of CodVest as the platform progresses.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-content">
+    <div>© 2026 CodVest. A CODLONT company.</div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="investment-plans.html">Investment Plans</a>
+      <a href="security.html">Security</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuButton = document.getElementById("menuButton");
+  const navLinks = document.getElementById("navLinks");
+
+  menuButton.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("show");
+    });
+  });
+
+  document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    alert("This contact form is currently a demonstration. Message submission will be enabled when the secure email service is connected.");
+  });
+</script>
+
+</body>
+</html>
